@@ -142,21 +142,48 @@ class UserRepository:
         data = user.dict()
         return UsersOut(id=id, **data)
 
-    def record_to_user_out(self, record):
-        return UsersOut(
-            id=record[0],
-            first_name=record[1],
-            last_name=record[2],
-            date_of_birth=record[3],
-            email=record[4],
-            phone_number=record[5],
-            gender=record[6],
-            profile_picture_url=record[7],
-            other_picture=record[8],
-            pronouns=record[9],
-            location=record[10],
-            looking_for=record[11],
-            about_me=record[12],
-            matches=record[13],
-            messages=record[14],
-        )
+    def edit(self, id: int, user: UsersIn) -> Union[UsersOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE users
+                        SET first_name = %s
+                            , last_name = %s
+                            , date_of_birth = %s
+                            , email = %s
+                            , phone_number = %s
+                            , gender = %s
+                            , profile_picture_url = %s
+                            , other_picture = %s
+                            , pronouns = %s
+                            , location = %s
+                            , looking_for = %s
+                            , about_me = %s
+                            , matches = %s
+                            , messages = %s
+                            WHERE id = %s
+                        """,
+                        [
+                            user.first_name,
+                            user.last_name,
+                            user.date_of_birth,
+                            user.email,
+                            user.phone_number,
+                            user.gender,
+                            user.profile_picture_url,
+                            user.other_picture,
+                            user.pronouns,
+                            user.location,
+                            user.looking_for,
+                            user.about_me,
+                            user.matches,
+                            user.messages,
+                            id
+                        ]
+                    )
+                    return self.user_in_to_out(id, user)
+        except Exception as e:
+            print(e)
+            return {"message": "could not update"}
