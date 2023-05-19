@@ -13,3 +13,18 @@ def create_user(user: UsersIn, response:Response,
     if message == {'message': 'could not create'}:
         response.status_code = 404
     return message
+
+
+
+
+
+
+
+
+@router.put("/users/{id}", response_model = Union[UsersOut, Error])
+def update_user(
+    id: int,
+    user: UsersIn,
+    repo: UserRepository = Depends(),
+) -> Union[UsersOut, Error]:
+    return repo.edit(id, user)

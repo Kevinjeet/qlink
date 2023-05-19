@@ -19,7 +19,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./qlink-service-service:/app
+      - ./qlink-service:/app
     environment:
       SIGNING_KEY: qlink
       DATABASE_URL: postgresql://qlink:qlink@db/qlink
