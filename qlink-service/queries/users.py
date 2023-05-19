@@ -1,8 +1,8 @@
 from pydantic import BaseModel
-from typing import Optional, Union
+from typing import Optional, List, Union
 from datetime import date
 from queries.pool import pool
-from fastapi import Response
+
 
 class Error(BaseModel):
     message: str
@@ -89,78 +89,58 @@ class UserRepository:
         except Exception as e:
             return {"message": "could not create"}
 
-
+    def get_all(self) -> Union[List[UsersOut], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                            SELECT id
+                                , first_name
+                                , last_name
+                                , date_of_birth
+                                , email
+                                , phone_number
+                                , gender
+                                , profile_picture_url
+                                , other_picture
+                                , pronouns
+                                , location
+                                , looking_for
+                                , about_me
+                                , matches
+                                , messages
+                            FROM users
+                        """
+                    )
+                    result = []
+                    for record in db:
+                        user = UsersOut(
+                            id=record[0],
+                            first_name=record[1],
+                            last_name=record[2],
+                            date_of_birth=record[3],
+                            email=record[4],
+                            phone_number=record[5],
+                            gender=record[6],
+                            profile_picture_url=record[7],
+                            other_picture=record[8],
+                            pronouns=record[9],
+                            location=record[10],
+                            looking_for=record[11],
+                            about_me=record[12],
+                            matches=record[13],
+                            messages=record[14],
+                        )
+                        result.append(user)
+                    return result
+        except Exception as e:
+            return {"message": "Could not get all users"}
 
 
     def user_in_to_out(self, id: int, user: UsersIn):
         data = user.dict()
         return UsersOut(id=id, **data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def edit(self, id: int, user: UsersIn) -> Union[UsersOut, Error]:
         try:
