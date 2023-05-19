@@ -8,4 +8,12 @@ I'm finishing up watching the FastApi videos today and it's really interesting t
 
 Also my brain is actually clicking on the router and queries part of it!
 
-blah blah
+## May 19, 2023
+
+Today, I worked on:
+
+* Installing the delete user function
+
+I got the delete thing to work! I procrastinated but I finished it and it feels great
+
+FastApi is so much simpler to learn once you start!

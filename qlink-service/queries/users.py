@@ -42,9 +42,33 @@ class UsersOut(BaseModel):
 
 
 class UserRepository:
+    def delete(self, user_id: int) -> bool:
+        try:
+            # connect it to database
+            with pool.connection() as conn:
+                # SQL
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM users
+                        WHERE id = %s
+                        """,
+                        [user_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+
+
+
+
     def create(self, user: UsersIn) -> UsersOut:
         try:
+            # connect to the database
             with pool.connection() as conn:
+                # get a cursor (run some SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
                         """

@@ -13,3 +13,11 @@ def create_user(user: UsersIn, response:Response,
     if message == {'message': 'could not create'}:
         response.status_code = 404
     return message
+
+
+@router.delete("/users/{user_id}", response_model=bool)
+def delete_user(
+    user_id: int,
+    repo: UserRepository = Depends()
+) -> bool:
+    return repo.delete(user_id)
