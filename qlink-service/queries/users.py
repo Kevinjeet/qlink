@@ -137,6 +137,39 @@ class UserRepository:
         except Exception as e:
             return {"message": "Could not get all users"}
 
+    def get_one(self, id:int)-> Optional[UsersOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result=db.execute(
+                        """
+                        Select id
+                            , first_name
+                            , last_name
+                            , date_of_birth
+                            , email
+                            , phone_number
+                            , gender
+                            , profile_picture_url
+                            , other_picture
+                            , pronouns
+                            , location
+                            , looking_for
+                            , about_me
+                            , matches
+                            , messages
+                        from users
+                        where id = %s
+                        """,
+                        [id]
+                    )
+                    record=result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_user_out(record)
+        except Exception as e:
+            return {"message": "Could not find user"}
+
 
     def user_in_to_out(self, id: int, user: UsersIn):
         data = user.dict()

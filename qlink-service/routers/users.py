@@ -28,3 +28,14 @@ def get_all(repo: UserRepository = Depends(),):
     # if message == {'message': 'could not create'}:
     #     response.status_code = 404
     return repo.get_all()
+
+@router.get("/users/{id}", response_model=Optional[UsersOut])
+def get_one(
+    id: int,
+    response:Response,
+    repo:UserRepository=Depends()
+)->UsersOut:
+    user= repo.get_one(id)
+    if user is None:
+        response.status_code=404
+    return user
