@@ -21,3 +21,28 @@ def delete_user(
     repo: UserRepository = Depends()
 ) -> bool:
     return repo.delete(user_id)
+@router.put("/users/{id}", response_model = Union[UsersOut, Error])
+def update_user(
+    id: int,
+    user: UsersIn,
+    repo: UserRepository = Depends(),
+) -> Union[UsersOut, Error]:
+    return repo.edit(id, user)
+
+@router.get("/users", response_model=Union[List[UsersOut], Error])
+def get_all(repo: UserRepository = Depends(),):
+    # message = repo.get_all()
+    # if message == {'message': 'could not create'}:
+    #     response.status_code = 404
+    return repo.get_all()
+
+@router.get("/users/{id}", response_model=Optional[UsersOut])
+def get_one(
+    id: int,
+    response:Response,
+    repo:UserRepository=Depends()
+)->UsersOut:
+    user= repo.get_one(id)
+    if user is None:
+        response.status_code=404
+    return user
