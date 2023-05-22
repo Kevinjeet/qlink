@@ -4,3 +4,6 @@ As a group created our database and completed our first API endpoint. Also compl
 
 May 19, 2023
 Created the get_all functionaily
+
+May 21, 2023
+checked/tested code

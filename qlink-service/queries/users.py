@@ -61,9 +61,6 @@ class UserRepository:
             return False
 
 
-
-
-
     def create(self, user: UsersIn) -> UsersOut:
         try:
             # connect to the database
@@ -162,6 +159,7 @@ class UserRepository:
         except Exception as e:
             return {"message": "Could not get all users"}
 
+
     def get_one(self, id:int)-> Optional[UsersOut]:
         try:
             with pool.connection() as conn:
@@ -194,31 +192,6 @@ class UserRepository:
                     return self.record_to_user_out(record)
         except Exception as e:
             return {"message": "Could not find user"}
-
-
-    def user_in_to_out(self, id: int, user: UsersIn):
-        data = user.dict()
-        return UsersOut(id=id, **data)
-
-    def record_to_user_out(self, record):
-        return UsersOut(
-            id=record[0],
-            first_name=record[1],
-            last_name=record[2],
-            date_of_birth=record[3],
-            email=record[4],
-            phone_number=record[5],
-            gender=record[6],
-            profile_picture_url=record[7],
-            other_picture=record[8],
-            pronouns=record[9],
-            location=record[10],
-            looking_for=record[11],
-            about_me=record[12],
-            matches=record[13],
-            messages=record[14],
-        )
-
 
 
     def edit(self, id: int, user: UsersIn) -> Union[UsersOut, Error]:
@@ -266,3 +239,28 @@ class UserRepository:
         except Exception as e:
             print(e)
             return {"message": "could not update"}
+
+
+    def user_in_to_out(self, id: int, user: UsersIn):
+        data = user.dict()
+        return UsersOut(id=id, **data)
+
+
+    def record_to_user_out(self, record):
+        return UsersOut(
+            id=record[0],
+            first_name=record[1],
+            last_name=record[2],
+            date_of_birth=record[3],
+            email=record[4],
+            phone_number=record[5],
+            gender=record[6],
+            profile_picture_url=record[7],
+            other_picture=record[8],
+            pronouns=record[9],
+            location=record[10],
+            looking_for=record[11],
+            about_me=record[12],
+            matches=record[13],
+            messages=record[14],
+        )

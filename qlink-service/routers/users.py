@@ -30,11 +30,11 @@ def update_user(
     return repo.edit(id, user)
 
 @router.get("/users", response_model=Union[List[UsersOut], Error])
-def get_all(repo: UserRepository = Depends(),):
-    # message = repo.get_all()
-    # if message == {'message': 'could not create'}:
-    #     response.status_code = 404
-    return repo.get_all()
+def get_all(response:Response, repo: UserRepository = Depends(),):
+    message = repo.get_all()
+    if message == {'message': 'could not get all users'}:
+        response.status_code = 404
+    return message
 
 @router.get("/users/{id}", response_model=Optional[UsersOut])
 def get_one(
