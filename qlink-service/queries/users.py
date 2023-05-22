@@ -198,7 +198,7 @@ class UserRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
+                    db.execute(
                         """
                         UPDATE users
                         SET first_name = %s
@@ -215,7 +215,7 @@ class UserRepository:
                             , about_me = %s
                             , matches = %s
                             , messages = %s
-                            WHERE id = %s
+                        WHERE id = %s
                         """,
                         [
                             user.first_name,
@@ -235,7 +235,10 @@ class UserRepository:
                             id
                         ]
                     )
-                    return self.user_in_to_out(id, user)
+                    if db.rowcount == 0:
+                        return {"message": "ID doesn't exist"}
+                    else:
+                        return self.user_in_to_out(id, user)
         except Exception as e:
             print(e)
             return {"message": "could not update"}

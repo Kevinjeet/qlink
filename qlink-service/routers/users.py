@@ -25,9 +25,13 @@ def delete_user(
 def update_user(
     id: int,
     user: UsersIn,
+    response:Response,
     repo: UserRepository = Depends(),
 ) -> Union[UsersOut, Error]:
-    return repo.edit(id, user)
+    message = repo.edit(id, user)
+    if message == {"messaage": "ID doesn't exist"}:
+        response.status_code = 404
+    return message
 
 @router.get("/users", response_model=Union[List[UsersOut], Error])
 def get_all(response:Response, repo: UserRepository = Depends(),):
