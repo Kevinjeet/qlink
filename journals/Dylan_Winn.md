@@ -1,4 +1,5 @@
-
+5/20
+Worked with team together to get Authentication working
 
 5/19
 Using videos with instruction, created PUT API call for users and got working.
