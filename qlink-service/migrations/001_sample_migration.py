@@ -4,10 +4,12 @@ steps = [
         """
         CREATE TABLE users (
             id SERIAL PRIMARY KEY NOT NULL,
+            username VARCHAR(25) NOT NULL,
+            password VARCHAR(2000) NOT NULL,
             first_name VARCHAR(1000) NOT NULL,
             last_name VARCHAR(1000) NOT NULL,
             email VARCHAR(1000) NOT NULL UNIQUE,
-            date_of_birth DATE NOT NULL,
+            date_of_birth VARCHAR(100) NOT NULL,
             phone_number INTEGER,
             interests TEXT,
             gender VARCHAR(100),
