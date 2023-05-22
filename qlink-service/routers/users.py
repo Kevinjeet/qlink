@@ -20,4 +20,3 @@ def get_all(repo: UserRepository = Depends(),):
     # if message == {'message': 'could not create'}:
     #     response.status_code = 404
     return repo.get_all()
-

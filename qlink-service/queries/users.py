@@ -111,6 +111,7 @@ class UserRepository:
                                 , matches
                                 , messages
                             FROM users
+                            ORDER BY id;
                         """
                     )
                     result = []
