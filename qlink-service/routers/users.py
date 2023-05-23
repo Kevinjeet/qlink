@@ -19,6 +19,18 @@ class HttpError(BaseModel):
 
 router = APIRouter()
 
+@router.get("/token", response_model=AccountToken | None)
+async def get_token(
+    request: Request,
+    account: UsersOut = Depends(authenticator.try_get_current_account_data)
+) -> AccountToken | None:
+    if account and authenticator.cookie_name in request.cookies:
+        return {
+            "access_token": request.cookies[authenticator.cookie_name],
+            "type": "Bearer",
+            "account": account,
+        }
+
 @router.post("/users", response_model=AccountToken | HttpError)
 async def create_user(user: UsersIn, request: Request, response:Response,
                 repo: UserRepository = Depends()):
@@ -46,9 +58,9 @@ def delete_user(
 ) -> bool:
     return repo.delete(user_id)
 
-@router.put("/users/{id}", response_model = Union[UsersOut, Error])
+@router.put("/users/{username}", response_model = Union[UsersOut, Error])
 def update_user(
-    id: int,
+    username: str,
     user: UsersIn,
     response:Response,
     repo: UserRepository = Depends(),
@@ -59,19 +71,21 @@ def update_user(
     return message
 
 @router.get("/users", response_model=Union[List[UsersOut], Error])
-def get_all(response:Response, repo: UserRepository = Depends(),):
+def get_all(response:Response,
+            account_data: dict = Depends(authenticator.get_current_account_data),
+            repo: UserRepository = Depends(),):
     message = repo.get_all()
     if message == {'message': 'could not get all users'}:
         response.status_code = 404
     return message
 
-@router.get("/users/{id}", response_model=Optional[UsersOut])
+@router.get("/users/{username}", response_model=Optional[UsersOut])
 def get_one(
-    id: int,
+    username: str,
     response:Response,
     repo:UserRepository=Depends()
 )->UsersOut:
-    user= repo.get_one(id)
+    user= repo.get_one(username)
     if user is None:
         response.status_code=404
     return user
