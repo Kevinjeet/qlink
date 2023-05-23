@@ -9,3 +9,4 @@ May 21, 2023
 checked/tested code
 
 May 22, 2023
+Worked on authorization, able to do the login and logout and when creating a user they have a hash password.
