@@ -1,3 +1,9 @@
+5/23
+
+
+5/22
+Worked with team more, finished authentication backend I think, added protected endpoint for get all
+
 5/20
 Worked with team together to get Authentication working
 
