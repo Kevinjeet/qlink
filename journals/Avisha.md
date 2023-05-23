@@ -17,3 +17,13 @@ Today, I worked on:
 I got the delete thing to work! I procrastinated but I finished it and it feels great
 
 FastApi is so much simpler to learn once you start!
+
+## May 22, 2023
+
+Today, we worked on:
+
+* Authentication
+
+We were able to get the sign in and sign up to work for our backend with the help of SEIRS. Curtis auth videos helped a lot.
+
+Tomorrow it'll be more auth stuff.
