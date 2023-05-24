@@ -134,9 +134,12 @@ class UserRepository:
                             user.messages
                         ]
                     )
+
                     id = result.fetchone()[0]
-                    return self.user_in_to_out(id, user)
+                    return self.user_in_to_out_hash(id, user)
+
         except Exception as e:
+            print(e)
             return {"message": "could not create"}
 
     def get_all(self) -> Union[List[UsersOut], Error]:
@@ -188,6 +191,7 @@ class UserRepository:
                         result.append(user)
                     return result
         except Exception as e:
+            print(e)
             return {"message": "Could not get all users"}
 
 
@@ -224,6 +228,7 @@ class UserRepository:
                         return None
                     return self.record_to_user_out(record)
         except Exception as e:
+            print(e)
             return {"message": "Could not find user"}
 
 
@@ -282,11 +287,16 @@ class UserRepository:
         if isinstance(user, UsersIn):
             data = user.dict()
             del data["password"]
-            return UsersOut(username=username, **data)
+            return UsersOut(id=id, **data)
         else:
             data = user.dict()
             del data["password"]
             return UsersOut(username=username, id=id, **data)
+
+    def user_in_to_out_hash(self, id: int, user: UsersIn):
+        data = user.dict()
+        del data["password"]
+        return UsersOut(id=id, **data)
 
 
     def record_to_user_out(self, record):
