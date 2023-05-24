@@ -38,3 +38,8 @@ Remember I know a lot more than I think I do.
 ```
 Worked on auth with Kevinjeet, we now have a create a user function that creates a token. users have the ability to login and out now.
 ```
+
+#### 5.23
+```
+Worked on auth for update user with Dylan. Finally got it to work properly. AUTH=SITH
+```
