@@ -1,5 +1,8 @@
-5/23
+5/24
+Unbroke GHI app crashing and got Login page displaying again
 
+5/23
+Got Update User function working with teammates
 
 5/22
 Worked with team more, finished authentication backend I think, added protected endpoint for get all
