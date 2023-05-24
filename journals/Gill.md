@@ -10,3 +10,6 @@ checked/tested code
 
 May 22, 2023
 Worked on authorization, able to do the login and logout and when creating a user they have a hash password.
+
+May 23, 2023
+Updating user has auth. Working on getting the login form to work and front end auth.

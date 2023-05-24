@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Response, HTTPException, status, Request
 from typing import Union, List, Optional
-from queries.users import UsersIn, UserRepository, UsersOut, Error, DuplicateAccountError
+from queries.users import UsersIn, UserRepository, UsersOut, Error, DuplicateAccountError, EditIn
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
@@ -54,19 +54,22 @@ async def create_user(user: UsersIn, request: Request, response:Response,
 @router.delete("/users/{user_id}", response_model=bool)
 def delete_user(
     user_id: int,
-    repo: UserRepository = Depends()
+    repo: UserRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ) -> bool:
     return repo.delete(user_id)
 
 @router.put("/users/{username}", response_model = Union[UsersOut, Error])
-def update_user(
+async def update_user(
     username: str,
-    user: UsersIn,
+    user: EditIn,
     response:Response,
     repo: UserRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[UsersOut, Error]:
-    message = repo.edit(id, user)
-    if message == {"messaage": "ID doesn't exist"}:
+    hashed_password = authenticator.hash_password(user.password)
+    message = repo.edit(username, user, hashed_password)
+    if message == {"message": "ID doesn't exist"}:
         response.status_code = 404
     return message
 
@@ -75,7 +78,7 @@ def get_all(response:Response,
             account_data: dict = Depends(authenticator.get_current_account_data),
             repo: UserRepository = Depends(),):
     message = repo.get_all()
-    if message == {'message': 'could not get all users'}:
+    if message == {'message': 'Could not get all users'}:
         response.status_code = 404
     return message
 
@@ -83,7 +86,8 @@ def get_all(response:Response,
 def get_one(
     username: str,
     response:Response,
-    repo:UserRepository=Depends()
+    repo:UserRepository=Depends(),
+    account_data: dict=Depends(authenticator.get_current_account_data)
 )->UsersOut:
     user= repo.get_one(username)
     if user is None:

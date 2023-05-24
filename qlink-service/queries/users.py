@@ -45,6 +45,24 @@ class UsersOut(BaseModel):
     matches: Optional[str]
     messages: Optional[str]
 
+class EditIn(BaseModel):
+    password: str
+    first_name: str
+    last_name: str
+    date_of_birth: str
+    email: str
+    phone_number: int
+    gender: Optional[str]
+    profile_picture_url: Optional[str]
+    other_picture: Optional[str]
+    pronouns: Optional[str]
+    location: Optional[str]
+    looking_for: Optional[str]
+    about_me: Optional[str]
+    matches: Optional[str]
+    messages: Optional[str]
+
+
 class UsersOutWithPassword(UsersOut):
     hashed_password: str
 
@@ -197,7 +215,7 @@ class UserRepository:
                             , matches
                             , messages
                         from users
-                        where username = %s
+                        where username = %s;
                         """,
                         [username]
                     )
@@ -209,15 +227,14 @@ class UserRepository:
             return {"message": "Could not find user"}
 
 
-    def edit(self, id: int, user: UsersIn) -> Union[UsersOut, Error]:
+    def edit(self, username: str, user: EditIn, hashed_password: str) -> Union[UsersOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db.execute(
+                    result = db.execute(
                         """
                         UPDATE users
-                        SET username = %s
-                            , password = %s
+                        SET password = %s
                             , first_name = %s
                             , last_name = %s
                             , date_of_birth = %s
@@ -232,11 +249,11 @@ class UserRepository:
                             , about_me = %s
                             , matches = %s
                             , messages = %s
-                        WHERE id = %s
+                        WHERE username = %s
+                        RETURNING id;
                         """,
                         [
-                            user.username,
-                            user.password,
+                            hashed_password,
                             user.first_name,
                             user.last_name,
                             user.date_of_birth,
@@ -251,22 +268,25 @@ class UserRepository:
                             user.about_me,
                             user.matches,
                             user.messages,
-                            id
+                            username
                         ]
                     )
-                    if db.rowcount == 0:
-                        return {"message": "ID doesn't exist"}
-                    else:
-                        return self.user_in_to_out(id, user)
+                    id = result.fetchone()[0]
+                    return self.user_in_to_out(username, user, id)
         except Exception as e:
             print(e)
             return {"message": "could not update"}
 
 
-    def user_in_to_out(self, id: int, user: UsersIn):
-        data = user.dict()
-        del data["password"]
-        return UsersOut(id=id, **data)
+    def user_in_to_out(self, username:str, user: Union[UsersIn, EditIn,], id:int):
+        if isinstance(user, UsersIn):
+            data = user.dict()
+            del data["password"]
+            return UsersOut(username=username, **data)
+        else:
+            data = user.dict()
+            del data["password"]
+            return UsersOut(username=username, id=id, **data)
 
 
     def record_to_user_out(self, record):
