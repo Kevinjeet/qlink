@@ -13,3 +13,15 @@ Worked on authorization, able to do the login and logout and when creating a use
 
 May 23, 2023
 Updating user has auth. Working on getting the login form to work and front end auth.
+
+May 24, 2023
+Fixed bugs and started on Profilelist and Profilecard
+
+May 25, 2023
+Continue working on front end also attempted to install tailwindcss
+
+may 28, 2023
+Rewateched front end auth lecture, used given code from lecture to see if I can get it to work with our code.
+
+May 29, 2023
+Continuation from yesterday. I was able to fetch data from the backend and show it on website. Also able to check token.

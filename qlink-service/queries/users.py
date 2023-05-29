@@ -27,6 +27,8 @@ class UsersIn(BaseModel):
     matches: Optional[str]
     messages: Optional[str]
 
+
+
 class UsersOut(BaseModel):
     id: int
     username: str
