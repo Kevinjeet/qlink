@@ -1,16 +1,17 @@
 import React from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 
 import "./App.css";
 // import ListProfiles from "./ListProlfies.js";
-// import LoginForm from "./LoginForm.js";
+import LoginForm from "./LoginForm.js";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import Auth from "./Auth";
-import ProfileCard from "./PofileCard.js";
+import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
+import ProfileView from "./profileView";
 
-function App() {
+function App(props) {
   const { token, logout } = useToken();
   const { user } = useUser(token);
 
@@ -32,12 +33,13 @@ function App() {
         )}
       </div>
       <NavLink to="/users">List of Pofiles</NavLink>
+      <NavLink to="users/:username">Your profile</NavLink>
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/" element={<LoginForm />} />
         <Route path="/signup" element={<Auth />} />
         <Route path="/signin" element={<Auth />} />
         <Route path="/users" element={<ProfileCard />} />
-
+        <Route path="users/:username" element={<ProfileView user={user}/>}/>
       </Routes>
 
 
