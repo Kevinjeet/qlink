@@ -3,11 +3,14 @@ from typing import Optional, List, Union
 
 from queries.pool import pool
 
+
 class DuplicateAccountError(ValueError):
     pass
 
+
 class Error(BaseModel):
     message: str
+
 
 class UsersIn(BaseModel):
     username: str
@@ -28,7 +31,6 @@ class UsersIn(BaseModel):
     messages: Optional[str]
 
 
-
 class UsersOut(BaseModel):
     id: int
     username: str
@@ -47,11 +49,12 @@ class UsersOut(BaseModel):
     matches: Optional[str]
     messages: Optional[str]
 
+
 class EditIn(BaseModel):
-    password: str
+    password: Optional[str]
     first_name: str
     last_name: str
-    date_of_birth: str
+    date_of_birth: Optional[str]
     email: str
     phone_number: int
     gender: Optional[str]
@@ -68,6 +71,7 @@ class EditIn(BaseModel):
 class UsersOutWithPassword(UsersOut):
     hashed_password: str
 
+
 class UserRepository:
     def delete(self, user_id: int) -> bool:
         try:
@@ -80,15 +84,16 @@ class UserRepository:
                         DELETE FROM users
                         WHERE id = %s
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-
-    def create(self, user: UsersIn, hashed_password: str) -> UsersOutWithPassword:
+    def create(
+        self, user: UsersIn, hashed_password: str
+    ) -> UsersOutWithPassword:
         try:
             # connect to the database
             with pool.connection() as conn:
@@ -133,8 +138,8 @@ class UserRepository:
                             user.looking_for,
                             user.about_me,
                             user.matches,
-                            user.messages
-                        ]
+                            user.messages,
+                        ],
                     )
 
                     id = result.fetchone()[0]
@@ -196,12 +201,11 @@ class UserRepository:
             print(e)
             return {"message": "Could not get all users"}
 
-
-    def get_one(self, username:str)-> Optional[UsersOutWithPassword]:
+    def get_one(self, username: str) -> Optional[UsersOutWithPassword]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result=db.execute(
+                    result = db.execute(
                         """
                         Select id
                             , username
@@ -223,9 +227,9 @@ class UserRepository:
                         from users
                         where username = %s;
                         """,
-                        [username]
+                        [username],
                     )
-                    record=result.fetchone()
+                    record = result.fetchone()
                     if record is None:
                         return None
                     return self.record_to_user_out(record)
@@ -233,59 +237,57 @@ class UserRepository:
             print(e)
             return {"message": "Could not find user"}
 
+    def edit(
+        self, username: str, user: EditIn, hashed_password: str
+    ) -> Union[UsersOut, Error]:
+        update_list = []
+        item_dict = {
+            "password": f"{user.password}",
+            "first_name": f"{user.first_name}",
+            "last_name": f"{user.email}",
+            "date_of_birth": f"{user.date_of_birth}",
+            "email": f"{user.email}",
+            "phone_number": f"{user.phone_number}",
+            "gender": f"{user.gender}",
+            "profile_picture_url": f"{user.profile_picture_url}",
+            "other_picture": f"{user.other_picture}",
+            "pronouns": f"{user.pronouns}",
+            "location": f"{user.location}",
+            "looking_for": f"{user.looking_for}",
+            "about_me": f"{user.about_me}",
+            "matches": f"{user.matches}",
+            "messages": f"{user.messages}",
+        }
 
-    def edit(self, username: str, user: EditIn, hashed_password: str) -> Union[UsersOut, Error]:
+        for key in item_dict:
+            if item_dict[key] is not None:
+                update_list.append(f"{key} = '{item_dict[key]}'")
+        update_string = ", ".join(update_list)
+        instructions = f"""UPDATE users
+        SET {update_string}
+        WHERE username = '{username}'
+        returning id;
+        """
+
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        UPDATE users
-                        SET password = %s
-                            , first_name = %s
-                            , last_name = %s
-                            , date_of_birth = %s
-                            , email = %s
-                            , phone_number = %s
-                            , gender = %s
-                            , profile_picture_url = %s
-                            , other_picture = %s
-                            , pronouns = %s
-                            , location = %s
-                            , looking_for = %s
-                            , about_me = %s
-                            , matches = %s
-                            , messages = %s
-                        WHERE username = %s
-                        RETURNING id;
-                        """,
-                        [
-                            hashed_password,
-                            user.first_name,
-                            user.last_name,
-                            user.date_of_birth,
-                            user.email,
-                            user.phone_number,
-                            user.gender,
-                            user.profile_picture_url,
-                            user.other_picture,
-                            user.pronouns,
-                            user.location,
-                            user.looking_for,
-                            user.about_me,
-                            user.matches,
-                            user.messages,
-                            username
-                        ]
-                    )
+                    result = db.execute(instructions)
                     id = result.fetchone()[0]
                     return self.user_in_to_out(username, user, id)
         except Exception as e:
             print(e)
-            return {"message": "could not update"}
+            return {"Could not update, error": e}
 
-
-    def user_in_to_out(self, username:str, user: Union[UsersIn, EditIn,], id:int):
+    def user_in_to_out(
+        self,
+        username: str,
+        user: Union[
+            UsersIn,
+            EditIn,
+        ],
+        id: int,
+    ):
         if isinstance(user, UsersIn):
             data = user.dict()
             del data["password"]
@@ -299,7 +301,6 @@ class UserRepository:
         data = user.dict()
         del data["password"]
         return UsersOut(id=id, **data)
-
 
     def record_to_user_out(self, record):
         return UsersOutWithPassword(
