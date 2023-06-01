@@ -33,7 +33,7 @@ function App(props) {
         )}
       </div>
       <NavLink to="/users">List of Pofiles</NavLink>
-      <NavLink to="users/:username">Your profile</NavLink>
+      <NavLink to="users/my_profile">Your profile</NavLink>
       <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/signup" element={<Auth />} />
