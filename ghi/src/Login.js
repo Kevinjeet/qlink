@@ -1,47 +1,61 @@
+import React, { useEffect, useState } from "react";
+import "./style.scss";
+import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useState } from "react";
+import "./style.scss";
 
-const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useToken();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(username, password);
-    e.target.reset();
+
+
+const Login = () => {
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { token, login } = useToken();
+
+  useEffect(() => {
+    if (token) {
+      navigate("/users");
+    }
+  }, [token, navigate]);
+
+  const handleFormChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  return (
-    <div className="card text-bg-light mb-3">
-      <h5 className="card-header">Login</h5>
-      <div className="card-body">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="mb-3">
-            <label className="form-label">Username:</label>
-            <input
-              name="username"
-              type="text"
-              className="form-control"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password:</label>
-            <input
-              name="password"
-              type="password"
-              className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <input className="btn btn-primary" type="submit" value="Login" />
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+  const isSignIn = location.pathname.includes("signin");
+
+  const handleSubmit = () => {
+      e.preventDefault();
+    if (isSignIn) {
+      login(formData.password, formData.email);
+    }
+    }
+
+
+  const { email = "" , password = "" } = formData;
+  return token ? null : (
+        <div className="formContainer">
+            <div className="formWrapper">
+                <span className="logo">QLink</span>
+                <span className="title">Login</span>
+
+                <form onSubmit={handleSubmit}>
+                    <input type="email" name="email" value={email} placeholder="email" onChange={handleFormChange} />
+                    <input type="password" name="password" value={password} placeholder="password" onChange={handleFormChange} />
+
+                    <button type="submit">Sign in</button>
+
+
+                </form>
+                <p>You don't have an account? Register</p>
+            </div>
+        </div>
+    );
 };
 
-export default LoginForm;
+export default Login;
