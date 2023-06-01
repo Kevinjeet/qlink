@@ -1,7 +1,6 @@
-import React from "react";
-import Avatar from "./img/qlinkimg.PNG"
+import React, { useEffect, useState } from "react";
+// import Avatar from "./img/qlinkimg.PNG"
 import "./style.scss";
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
@@ -13,13 +12,13 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { token, register } = useToken();
+  const { token, login, register } = useToken();
 
   useEffect(() => {
     if (token) {
       navigate("/users");
     }
-  }, [token, navigate]);
+  }, [token]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -28,16 +27,17 @@ const SignUp = () => {
     });
   };
 
-  const isSignIn = location.pathname.includes("signin");
+  // const isSignIn = location.pathname.includes("signin");
 
   const handleSubmit = () => {
-      e.preventDefault();
-    if (isSignIn) {
-      register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
-    }
-  };
+    register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
+    login(formData.username, formData.password);
+    navigate("/users");
 
-    const { username = "", firstName = "", lastName = "", email = "", password = "", DOB = "", phoneNumber = "" } = formData;
+
+    }
+
+    const { username = "", first_name = "", last_name = "", email = "", password = "", date_of_birth = "", phone_number = "" } = formData;
     return token ? null : (
         <div className="formContainer">
             <div className="formWrapper">
@@ -46,23 +46,23 @@ const SignUp = () => {
 
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="username" value={username} placeholder="username" onChange={handleFormChange} />
-                    <input type="text" name="first name" value={firstName} placeholder="first name" onChange={handleFormChange} />
-                    <input type="text" name="last name" value={lastName} placeholder="last name" onChange={handleFormChange} />
+                    <input type="text" name="first_name" value={first_name} placeholder="first name" onChange={handleFormChange} />
+                    <input type="text" name="last_name" value={last_name} placeholder="last name" onChange={handleFormChange} />
 
 
                     <input type="email" name="email" value={email} placeholder="email" onChange={handleFormChange} />
                     <input type="password" name="password" value={password} placeholder="password" onChange={handleFormChange} />
 
                     <label htmlFor="DOB">DOB</label>
-                    <input type="date" name="DOB" value={DOB} id="DOB" onChange={handleFormChange} />
-                    <input type="tel" name="phone number" value={phoneNumber} placeholder="phone number" onChange={handleFormChange} />
+                    <input type="date" name="date_of_birth" value={date_of_birth} id="DOB" onChange={handleFormChange} />
+                    <input type="tel" name="phone_number" value={phone_number} placeholder="phone number" onChange={handleFormChange} />
 
-                    <input style={{display:"none"}} name="file" type="file" id="file" onChange={handleFormChange} />
+                    {/* <input style={{display:"none"}} name="file" type="file" id="file" onChange={handleFormChange} />
                     <label htmlFor="file">
                         <img width="40" height='40' src={Avatar} alt="" />
                         <span>Add an Avatar</span>
-                    </label>
-                    <button type="submit">Sign Up</button>
+                    </label> */}
+                    <button onClick={handleSubmit}>Sign Up</button>
 
 
                 </form>

@@ -18,7 +18,7 @@ const Login = () => {
     if (token) {
       navigate("/users");
     }
-  }, [token, navigate]);
+  }, [token]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -29,30 +29,43 @@ const Login = () => {
 
   const isSignIn = location.pathname.includes("signin");
 
-  const handleSubmit = () => {
-      e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (isSignIn) {
-      login(formData.password, formData.email);
+      login(formData.username, formData.password);
     }
+    console.log(formData);
     }
 
 
-  const { email = "" , password = "" } = formData;
+  const { username = "" , password = "" } = formData;
   return token ? null : (
         <div className="formContainer">
             <div className="formWrapper">
                 <span className="logo">QLink</span>
                 <span className="title">Login</span>
 
-                <form onSubmit={handleSubmit}>
-                    <input type="email" name="email" value={email} placeholder="email" onChange={handleFormChange} />
-                    <input type="password" name="password" value={password} placeholder="password" onChange={handleFormChange} />
+                <form>
+                    <input
+                    type="text"
+                    name="username"
+                    value={username}
+                    placeholder="username"
+                    onChange={handleFormChange}
+                    />
+                    <input
+                    type="password"
+                    name="password"
+                    value={password}
+                    placeholder="password"
+                    onChange={handleFormChange}
+                    />
 
-                    <button type="submit">Sign in</button>
+                    <button onClick={handleSubmit}>Login</button>
 
 
                 </form>
-                <p>You don't have an account? Register</p>
+                <p>You don't have an account?<a href="/">Register</a></p>
             </div>
         </div>
     );

@@ -4,24 +4,24 @@ import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import Home from "./Home";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import useUser from "./useUser.js"
 
 
 
-
-function App() {
+function App(props) {
+  const { token, logout } = useToken();
+  const { user } = useUser(token);
 
 
 
   return (
-    <BrowserRouter>
-      <div className="container">
         <Routes>
           <Route path="/" element={<SignUp />} />
-          <Route path="/Login" element={<Login />} />
+
+          <Route path="/signin" element={<Login />} />
           <Route path="/Chat" element={<Home />} />
         </Routes>
-      </div>
-    </BrowserRouter>
   );
 }
 
