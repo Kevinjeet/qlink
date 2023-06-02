@@ -90,7 +90,10 @@ async def update_user_(
     repo: UserRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[UsersOut, Error]:
-    hashed_password = authenticator.hash_password(user.password)
+    if user.password:
+        hashed_password = authenticator.hash_password(user.password)
+    else:
+        hashed_password = "None"
     print("hash:", hashed_password)
     message = repo.edit(username, user, hashed_password)
 

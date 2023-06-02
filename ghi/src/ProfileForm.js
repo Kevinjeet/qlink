@@ -17,6 +17,7 @@ function ProfileForm(props) {
     const [location, setLocation] = useState('');
     const [looking_for, setLookingFor] = useState('');
     const [about_me, setAboutMe] = useState('');
+    const [interests, setInterests] = useState('')
     const { token } = useToken();
 
 
@@ -33,6 +34,7 @@ function ProfileForm(props) {
     const handleLocationChange = (event) => setLocation(event.target.value);
     const handleLookingForChange = (event) => setLookingFor(event.target.value);
     const handleAboutMeChange = (event) => setAboutMe(event.target.value);
+    const handleInterestsChange = (event) => setInterests(event.target.value);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,6 +52,7 @@ function ProfileForm(props) {
         profile.location = location;
         profile.looking_for = looking_for;
         profile.about_me = about_me;
+        profile.interests = interests;
 
 
         const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`;
@@ -80,6 +83,7 @@ function ProfileForm(props) {
             setLocation(profile.location);
             setLookingFor(profile.looking_for);
             setAboutMe(profile.about_me);
+            setInterests(profile.interests)
         };
     }
     useEffect(() => {
@@ -107,43 +111,12 @@ function ProfileForm(props) {
                     setLocation(data.location);
                     setLookingFor(data.looking_for);
                     setAboutMe(data.about_me);
+                    setInterests(data.interests)
                 }
             }
             fetchData();
         }
     },[token, props.user]);
-
-
-    // const fetchData = async () => {
-    //     console.log("test")
-    //     const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`, {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         },
-    //         method: "get",
-    //     });
-
-    //     if (response.ok) {
-    //         const data = await response.json();
-    //         setFirstName(data.first_name);
-    //         setLastName(data.last_name);
-    //         setEmail(data.email);
-    //         setPhoneNumber(data.phone_number);
-    //         setGender(data.gender)
-    //         setProfilePictureUrl(data.profile_picture_url);
-    //         setOtherPictureUrl(data.other_picture);
-    //         setPronouns(data.pronouns);
-    //         setLocation(data.location);
-    //         setLookingFor(data.looking_for);
-    //         setAboutMe(data.about_me);
-    //     }
-
-    // }
-
-    // useEffect(() => {
-    //     if (props.user.username){
-    //         fetchData()};
-    // },[token, props.user], fetchData);
 
     return (
         <>
@@ -153,56 +126,60 @@ function ProfileForm(props) {
                     <h1>Create a Profile</h1>
                     <form onSubmit={handleSubmit} id="create-profile-form">
                         <div className="form-floating mb-3">
-                            <input onChange={handlePasswordChange} placeholder="Password" required type="text" name="password" id="password" className="form-control" value={password} />
+                            <input onChange={handlePasswordChange} placeholder="Password" type="text" name="password" id="password" className="form-control" value={password} />
                             <label htmlFor="password">Password</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleFirstNameChange} placeholder="First Name" required type="text" name="first_name" id="first_name" className="form-control" value={first_name} />
+                            <input onChange={handleFirstNameChange} placeholder="First Name" type="text" name="first_name" id="first_name" className="form-control" value={first_name} />
                             <label htmlFor="first_name">First Name</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleLastNameChange} placeholder="Last Name" required type="text" name="last_name" id="last_name" className="form-control" value={last_name} />
+                            <input onChange={handleLastNameChange} placeholder="Last Name" type="text" name="last_name" id="last_name" className="form-control" value={last_name} />
                             <label htmlFor="last_name">Last Name</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleDOBChange} placeholder="date_of_birth" required type="text" name="date_of_birth" id="date_of_birth" className="form-control" value={date_of_birth} />
+                            <input onChange={handleDOBChange} placeholder="date_of_birth" type="text" name="date_of_birth" id="date_of_birth" className="form-control" value={date_of_birth} />
                             <label htmlFor="last_name">date_of_birth</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleEmailChange} placeholder="Email" required type="text" name="email" id="email" className="form-control" value={email} />
+                            <input onChange={handleEmailChange} placeholder="Email" type="text" name="email" id="email" className="form-control" value={email} />
                             <label htmlFor="email">Email</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handlePhoneNumberChange} placeholder="Phone Number" required type="number" name="phone_number" id="phone_number" className="form-control" value={phone_number} />
+                            <input onChange={handlePhoneNumberChange} placeholder="Phone Number" type="number" name="phone_number" id="phone_number" className="form-control" value={phone_number} />
                             <label htmlFor="phone_number">Phone Number</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleGenderChange} placeholder="Gender" required type="text" name="gender" id="gender" className="form-control" value={gender} />
+                            <input onChange={handleGenderChange} placeholder="Gender" type="text" name="gender" id="gender" className="form-control" value={gender} />
                             <label htmlFor="gender">Gender</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleProfilePictureUrlChange} placeholder="Profile Pic Url" required type="text" name="profile_picture_url" id="profile_picture_url" className="form-control" value={profile_picture_url} />
+                            <input onChange={handleProfilePictureUrlChange} placeholder="Profile Pic Url" type="text" name="profile_picture_url" id="profile_picture_url" className="form-control" value={profile_picture_url} />
                             <label htmlFor="profile_picture_url">Profile Picture URL</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleOtherPictureUrlChange} placeholder="Other Pic" required type="text" name="other_picture" id="other_picture" className="form-control" value={other_picture} />
+                            <input onChange={handleOtherPictureUrlChange} placeholder="Other Pic" type="text" name="other_picture" id="other_picture" className="form-control" value={other_picture} />
                             <label htmlFor="other_picture">Other Picture</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handlePronounChange} placeholder="Pronouns" required type="text" name="pronouns" id="pronouns" className="form-control" value={pronouns} />
+                            <input onChange={handlePronounChange} placeholder="Pronouns" type="text" name="pronouns" id="pronouns" className="form-control" value={pronouns} />
                             <label htmlFor="email">Pronouns</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleLocationChange} placeholder="Location" required type="text" name="location" id="location" className="form-control" value={location} />
+                            <input onChange={handleLocationChange} placeholder="Location" type="text" name="location" id="location" className="form-control" value={location} />
                             <label htmlFor="email">Location</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleLookingForChange} placeholder="Looking For" required type="text" name="looking_for" id="looking_for" className="form-control" value={looking_for} />
+                            <input onChange={handleLookingForChange} placeholder="Looking For" type="text" name="looking_for" id="looking_for" className="form-control" value={looking_for} />
                             <label htmlFor="email">Looking For</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input onChange={handleAboutMeChange} placeholder="About" required type="text" name="about_me" id="about_me" className="form-control" value={about_me} />
+                            <input onChange={handleAboutMeChange} placeholder="About" type="text" name="about_me" id="about_me" className="form-control" value={about_me} />
                             <label htmlFor="email">About Me</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input onChange={handleInterestsChange} placeholder="Interests" type="text" name="Interests" id="interests" className="form-control" value={interests} />
+                            <label htmlFor="email">Interests</label>
                         </div>
                         <button className="btn btn-primary">Create</button>
                     </form>

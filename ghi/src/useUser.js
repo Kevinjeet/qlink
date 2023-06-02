@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useUser = (token) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {

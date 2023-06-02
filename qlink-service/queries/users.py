@@ -29,6 +29,8 @@ class UsersIn(BaseModel):
     about_me: Optional[str]
     matches: Optional[str]
     messages: Optional[str]
+    interests: Optional[str]
+    blocked: Optional[str]
 
 
 class UsersOut(BaseModel):
@@ -48,6 +50,8 @@ class UsersOut(BaseModel):
     about_me: Optional[str]
     matches: Optional[str]
     messages: Optional[str]
+    interests: Optional[str]
+    blocked: Optional[str]
 
 
 class EditIn(BaseModel):
@@ -66,6 +70,8 @@ class EditIn(BaseModel):
     about_me: Optional[str]
     matches: Optional[str]
     messages: Optional[str]
+    interests: Optional[str]
+    blocked: Optional[str]
 
 
 class UsersOutWithPassword(UsersOut):
@@ -171,6 +177,8 @@ class UserRepository:
                                 , about_me
                                 , matches
                                 , messages
+                                , interests
+                                , blocked
                             FROM users
                             ORDER BY id;
                         """
@@ -194,6 +202,8 @@ class UserRepository:
                             about_me=record[13],
                             matches=record[14],
                             messages=record[15],
+                            interests=record[16],
+                            blocked=record[17],
                         )
                         result.append(user)
                     return result
@@ -224,6 +234,8 @@ class UserRepository:
                             , about_me
                             , matches
                             , messages
+                            , interests
+                            , blocked
                         from users
                         where username = %s;
                         """,
@@ -240,7 +252,6 @@ class UserRepository:
     def edit(
         self, username: str, user: EditIn, hashed_password: str
     ) -> Union[UsersOut, Error]:
-        print("hash in edit function: ", hashed_password)
         update_list = []
         item_dict = {
             "password": f"{hashed_password}",
@@ -258,8 +269,9 @@ class UserRepository:
             "about_me": f"{user.about_me}",
             "matches": f"{user.matches}",
             "messages": f"{user.messages}",
+            "interests": f"{user.interests}",
+            "blocked": f"{user.blocked}",
         }
-        print("Item dict: ", item_dict)
 
         for key in item_dict:
             if item_dict[key] != "None":
@@ -321,4 +333,6 @@ class UserRepository:
             about_me=record[14],
             matches=record[15],
             messages=record[16],
+            interests=record[17],
+            blocked=record[18],
         )

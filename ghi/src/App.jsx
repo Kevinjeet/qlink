@@ -22,7 +22,7 @@ function App(props) {
     <>
       <div>
 
-        {user ? (
+        {token ? (
           <>
             <div className="navigation">
               <button className="logout-button" onClick={logout}>
@@ -49,7 +49,7 @@ function App(props) {
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/Chat" element={<Home />} />
-        <Route path="/users" element={<ProfileCard />} />
+        <Route path="/users" element={<ProfileCard user={user}/>} />
         <Route path="users/:username" element={<ProfileView user={user} />} />
         <Route path="/edit" element={<ProfileForm user={user} token={token} />} />
 

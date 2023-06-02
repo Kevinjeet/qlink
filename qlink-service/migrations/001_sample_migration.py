@@ -11,7 +11,6 @@ steps = [
             email VARCHAR(1000) NOT NULL UNIQUE,
             date_of_birth VARCHAR(100) NOT NULL,
             phone_number INTEGER,
-            interests TEXT,
             gender VARCHAR(100),
             profile_picture_url TEXT,
             other_picture TEXT,
@@ -20,7 +19,9 @@ steps = [
             looking_for TEXT,
             about_me TEXT,
             matches TEXT,
-            messages TEXT
+            messages TEXT,
+            interests TEXT,
+            blocked TEXT
 
         );
         """,
