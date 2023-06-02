@@ -1,15 +1,15 @@
-import React from "react";
+
 import { Routes, Route, NavLink } from "react-router-dom";
-
-
 import "./App.css";
-// import ListProfiles from "./ListProlfies.js";
-import LoginForm from "./LoginForm.js";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import Auth from "./Auth";
 import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
 import ProfileView from "./profileView";
+import "./style.scss";
+import SignUp from "./SignUp";
+import Login from "./Login";
+import Home from "./Home";
+import React from "react";
 
 function App(props) {
   const { token, logout } = useToken();
@@ -23,21 +23,22 @@ function App(props) {
 
         {user ? (
           <>
-            <button onClick={logout}>Log off</button>
+            <button onClick={logout}><a href="/signin">Logout</a></button>
+             <NavLink to="/users">List of Pofiles</NavLink>
+            <NavLink to="users/my_profile">Your profile</NavLink>
           </>
         ) : (
           <>
             <NavLink to="/signin">Login</NavLink>
-            <NavLink to="/signup">Sign Up</NavLink>
+            <NavLink to="/">Sign Up</NavLink>
           </>
         )}
       </div>
-      <NavLink to="/users">List of Pofiles</NavLink>
-      <NavLink to="users/my_profile">Your profile</NavLink>
+
       <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/signup" element={<Auth />} />
-        <Route path="/signin" element={<Auth />} />
+        <Route path="/" element={<SignUp user={user} />} />
+        <Route path="/signin" element={<Login />} />
+        <Route path="/Chat" element={<Home />} />
         <Route path="/users" element={<ProfileCard />} />
         <Route path="users/:username" element={<ProfileView user={user}/>}/>
       </Routes>
