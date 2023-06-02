@@ -26,13 +26,13 @@ function Auth() {
 
   const handleSubmit = () => {
     if (isSignIn) {
-      login(formData.username, formData.password, formData.email);
+      login(formData.username, formData.password);
     } else {
       register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
     }
   };
 
-  const { username = "", password = "" , email = "" } = formData;
+  const { username = "", password = "" } = formData;
   return token ? null : (
     <div>
       <ul>
@@ -54,15 +54,6 @@ function Auth() {
             onChange={handleFormChange}
           />
           </li>
-        <li>
-          email{" "}
-          <input
-            type="text"
-            name="email"
-            value={email}
-            onChange={handleFormChange}
-          />
-        </li>
       </ul>
       <button onClick={handleSubmit}>{isSignIn ? "Login" : "Sign Up"}</button>
     </div>
