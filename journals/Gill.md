@@ -25,3 +25,6 @@ Rewateched front end auth lecture, used given code from lecture to see if I can 
 
 May 29, 2023
 Continuation from yesterday. I was able to fetch data from the backend and show it on website. Also able to check token.
+
+May 30, 2023
+Finish the profile card, I have the search bar functioning.
