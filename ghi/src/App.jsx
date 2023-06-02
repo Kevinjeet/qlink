@@ -20,7 +20,14 @@ function App(props) {
 
   return (
     <>
-      <div>
+      <div
+          style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "80%",
+          margin: "auto",
+        }}>
 
         {user ? (
           <>

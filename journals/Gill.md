@@ -28,3 +28,6 @@ Continuation from yesterday. I was able to fetch data from the backend and show 
 
 May 30, 2023
 Finish the profile card, I have the search bar functioning.
+
+May 31, 2023
+Added more to the filter, now in the list of profile the current logged in user's profile wont show. Also the list of profiles will not show if they are in the loggend user's match field.
