@@ -5,7 +5,6 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
 import ProfileView from "./profileView";
-import ProfileForm from "./ProfileForm";
 import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -20,14 +19,7 @@ function App(props) {
 
   return (
     <>
-      <div
-          style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          width: "80%",
-          margin: "auto",
-        }}>
+      <div>
 
         {user ? (
           <>
@@ -37,7 +29,9 @@ function App(props) {
               </button>
               <nav className="nav-links">
                 <a className="nav-link" href="/users">List of Profiles</a>
-                <a className="nav-link" href="/users/my_profile">My Profile</a>
+                <a className="nav-link" href="/chat">My Messages</a>
+
+                <a className="nav-link" href="/users/my_profile">My profile</a>
                 <a className="nav-link" href="/edit">Edit Profile</a>
               </nav>
             </div>
@@ -49,14 +43,16 @@ function App(props) {
           </>
         )}
       </div>
+
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
-        <Route path="/chat" element={<Home />} />
+        <Route path="/Chat" element={<Home />} />
         <Route path="/users" element={<ProfileCard />} />
         <Route path="users/:username" element={<ProfileView user={user}/>}/>
-        <Route path="/edit" element={<ProfileForm user={user} token={token} />}/>
       </Routes>
+
+
     </>
   );
 }
