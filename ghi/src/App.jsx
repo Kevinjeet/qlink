@@ -10,6 +10,7 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import Home from "./Home";
 import React from "react";
+import ProfileForm from "./ProfileForm"
 
 function App(props) {
   const { token, logout } = useToken();
@@ -49,7 +50,9 @@ function App(props) {
         <Route path="/signin" element={<Login />} />
         <Route path="/Chat" element={<Home />} />
         <Route path="/users" element={<ProfileCard />} />
-        <Route path="users/:username" element={<ProfileView user={user}/>}/>
+        <Route path="users/:username" element={<ProfileView user={user} />} />
+        <Route path="/edit" element={<ProfileForm user={user} token={token} />} />
+
       </Routes>
 
 
