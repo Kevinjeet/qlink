@@ -25,7 +25,7 @@ function App(props) {
         {user ? (
           <>
             <button onClick={logout}><a href="/signin">Logout</a></button>
-             <NavLink to="/users">List of Profiles</NavLink>
+            <NavLink to="/users">List of Profiles</NavLink>
             <NavLink to="users/my_profile">Your profile</NavLink>
             <NavLink to="/edit">Edit Profile</NavLink>
           </>
