@@ -4,7 +4,42 @@
     }
 }
 
+.navigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
 
+}
+
+.logout-button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.logout-button a{
+    text-decoration: none;
+    color: pink;
+}
+
+.nav-links{
+    display: flex;
+    align-items: center;
+}
+
+.nav-link{
+    margin-right: 10px;
+    text-decoration: none;
+    color: plum;
+}
+
+.nav-link:hover{
+    color: plum;
+}
 
 .formContainer{
     background-color: rgb(180, 132, 180);

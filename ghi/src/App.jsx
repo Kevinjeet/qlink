@@ -24,10 +24,16 @@ function App(props) {
 
         {user ? (
           <>
-            <button onClick={logout}><a href="/signin">Logout</a></button>
-            <NavLink to="/users">List of Profiles</NavLink>
-            <NavLink to="users/my_profile">Your profile</NavLink>
-            <NavLink to="/edit">Edit Profile</NavLink>
+            <div className="navigation">
+              <button className="logout-button" onClick={logout}>
+                <a href="/signin">Logout</a>
+              </button>
+              <nav className="nav-links">
+                <a className="nav-link" href="/users">List of Profiles</a>
+                <a className="nav-link" href="/users/my_profile">My Profile</a>
+                <a className="nav-link" href="/edit">Edit Profile</a>
+              </nav>
+            </div>
           </>
         ) : (
           <>
@@ -39,7 +45,7 @@ function App(props) {
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
-        <Route path="/Chat" element={<Home />} />
+        <Route path="/chat" element={<Home />} />
         <Route path="/users" element={<ProfileCard />} />
         <Route path="users/:username" element={<ProfileView user={user}/>}/>
         <Route path="/edit" element={<ProfileForm user={user} token={token} />}/>
