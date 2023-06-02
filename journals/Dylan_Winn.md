@@ -1,3 +1,27 @@
+6/1
+After pushing yesterday, everything broke, but got it working again.
+Turns out I did not have PUT requests working with any number of fields, but I do now,
+other than known issue with password being the only required field.
+Front-end also fully working.
+
+
+5/31
+Got PUT requests working with any number of fields, should make everything easier.
+Front-end form is now getting the information properly (bugs squished) but refreshing after every type
+Committing now as-is so that the update back-end code can get to everyone else
+
+5/30
+Threw out outside library work, started over making form directly.
+Learning curve was too steep.
+Got form working I think, but realized ways back-end was messed up.
+Started working to try to make PUT requests work with any number of fields
+
+5/26
+Attempted to get form (using outside library)
+
+5/25
+Created barebones "create profile" page
+
 5/24
 Unbroke GHI app crashing and got Login page displaying again
 

@@ -83,7 +83,7 @@ def delete_user(
 
 
 @router.put("/users/{username}", response_model=Union[UsersOut, Error])
-async def update_user(
+async def update_user_(
     username: str,
     user: EditIn,
     response: Response,
@@ -91,7 +91,9 @@ async def update_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[UsersOut, Error]:
     hashed_password = authenticator.hash_password(user.password)
+    print("hash:", hashed_password)
     message = repo.edit(username, user, hashed_password)
+
     if message == {"message": "ID doesn't exist"}:
         response.status_code = 404
     return message

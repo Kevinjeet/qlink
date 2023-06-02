@@ -5,6 +5,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
 import ProfileView from "./profileView";
+import ProfileForm from "./ProfileForm";
 import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -24,8 +25,9 @@ function App(props) {
         {user ? (
           <>
             <button onClick={logout}><a href="/signin">Logout</a></button>
-             <NavLink to="/users">List of Pofiles</NavLink>
+             <NavLink to="/users">List of Profiles</NavLink>
             <NavLink to="users/my_profile">Your profile</NavLink>
+            <NavLink to="/edit">Edit Profile</NavLink>
           </>
         ) : (
           <>
@@ -34,16 +36,14 @@ function App(props) {
           </>
         )}
       </div>
-
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/Chat" element={<Home />} />
         <Route path="/users" element={<ProfileCard />} />
         <Route path="users/:username" element={<ProfileView user={user}/>}/>
+        <Route path="/edit" element={<ProfileForm user={user} token={token} />}/>
       </Routes>
-
-
     </>
   );
 }

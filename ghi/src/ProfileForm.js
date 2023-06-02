@@ -4,8 +4,10 @@ import useToken from '@galvanize-inc/jwtdown-for-react';
 
 
 function ProfileForm(props) {
+    const [password, setPassword] = useState('')
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
+    const [date_of_birth, setDOB] = useState('');
     const [email, setEmail] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
     const [gender, setGender] = useState('');
@@ -18,8 +20,10 @@ function ProfileForm(props) {
     const { token } = useToken();
 
 
+    const handlePasswordChange = (event) => setPassword(event.target.value);
     const handleFirstNameChange = (event) => setFirstName(event.target.value);
     const handleLastNameChange = (event) => setLastName(event.target.value);
+    const handleDOBChange = (event) => setDOB(event.target.value);
     const handleEmailChange = (event) => setEmail(event.target.value);
     const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
     const handleGenderChange = (event) => setGender(event.target.value);
@@ -33,8 +37,10 @@ function ProfileForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const profile = {};
+        profile.password = password;
         profile.first_name = first_name;
         profile.last_name = last_name;
+        profile.date_of_birth = date_of_birth;
         profile.email = email;
         profile.phone_number = phone_number;
         profile.gender = gender;
@@ -61,8 +67,10 @@ function ProfileForm(props) {
 
         const response = await fetch(url, fetchConfig);
         if (response.ok) {
+            setPassword(profile.password);
             setFirstName(profile.first_name);
             setLastName(profile.last_name);
+            setDOB(profile.date_of_birth);
             setEmail(profile.email);
             setPhoneNumber(profile.phone_number);
             setGender(profile.gender)
@@ -74,38 +82,68 @@ function ProfileForm(props) {
             setAboutMe(profile.about_me);
         };
     }
-
-
-    const fetchData = async () => {
-        console.log("test")
-        const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            method: "get",
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            setFirstName(data.first_name);
-            setLastName(data.last_name);
-            setEmail(data.email);
-            setPhoneNumber(data.phone_number);
-            setGender(data.gender)
-            setProfilePictureUrl(data.profile_picture_url);
-            setOtherPictureUrl(data.other_picture);
-            setPronouns(data.pronouns);
-            setLocation(data.location);
-            setLookingFor(data.looking_for);
-            setAboutMe(data.about_me);
-        }
-
-    }
-
     useEffect(() => {
         if (props.user.username){
-            fetchData()};
-    },[token, props.user, fetchData]);
+            const fetchData = async () => {
+                console.log(props.user.username)
+                const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    method: "get",
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setFirstName(data.first_name);
+                    setLastName(data.last_name);
+                    setDOB(data.date_of_birth);
+                    setEmail(data.email);
+                    setPhoneNumber(data.phone_number);
+                    setGender(data.gender)
+                    setProfilePictureUrl(data.profile_picture_url);
+                    setOtherPictureUrl(data.other_picture);
+                    setPronouns(data.pronouns);
+                    setLocation(data.location);
+                    setLookingFor(data.looking_for);
+                    setAboutMe(data.about_me);
+                }
+            }
+            fetchData();
+        }
+    },[token, props.user]);
+
+
+    // const fetchData = async () => {
+    //     console.log("test")
+    //     const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`, {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //         method: "get",
+    //     });
+
+    //     if (response.ok) {
+    //         const data = await response.json();
+    //         setFirstName(data.first_name);
+    //         setLastName(data.last_name);
+    //         setEmail(data.email);
+    //         setPhoneNumber(data.phone_number);
+    //         setGender(data.gender)
+    //         setProfilePictureUrl(data.profile_picture_url);
+    //         setOtherPictureUrl(data.other_picture);
+    //         setPronouns(data.pronouns);
+    //         setLocation(data.location);
+    //         setLookingFor(data.looking_for);
+    //         setAboutMe(data.about_me);
+    //     }
+
+    // }
+
+    // useEffect(() => {
+    //     if (props.user.username){
+    //         fetchData()};
+    // },[token, props.user], fetchData);
 
     return (
         <>
@@ -115,12 +153,20 @@ function ProfileForm(props) {
                     <h1>Create a Profile</h1>
                     <form onSubmit={handleSubmit} id="create-profile-form">
                         <div className="form-floating mb-3">
+                            <input onChange={handlePasswordChange} placeholder="Password" required type="text" name="password" id="password" className="form-control" value={password} />
+                            <label htmlFor="password">Password</label>
+                        </div>
+                        <div className="form-floating mb-3">
                             <input onChange={handleFirstNameChange} placeholder="First Name" required type="text" name="first_name" id="first_name" className="form-control" value={first_name} />
                             <label htmlFor="first_name">First Name</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleLastNameChange} placeholder="Last Name" required type="text" name="last_name" id="last_name" className="form-control" value={last_name} />
                             <label htmlFor="last_name">Last Name</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input onChange={handleDOBChange} placeholder="date_of_birth" required type="text" name="date_of_birth" id="date_of_birth" className="form-control" value={date_of_birth} />
+                            <label htmlFor="last_name">date_of_birth</label>
                         </div>
                         <div className="form-floating mb-3">
                             <input onChange={handleEmailChange} placeholder="Email" required type="text" name="email" id="email" className="form-control" value={email} />

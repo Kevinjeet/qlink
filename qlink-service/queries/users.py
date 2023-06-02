@@ -34,11 +34,11 @@ class UsersIn(BaseModel):
 class UsersOut(BaseModel):
     id: int
     username: str
-    first_name: str
-    last_name: str
-    date_of_birth: str
-    email: str
-    phone_number: int
+    first_name: Optional[str]
+    last_name: Optional[str]
+    date_of_birth: Optional[str]
+    email: Optional[str]
+    phone_number: Optional[int]
     gender: Optional[str]
     profile_picture_url: Optional[str]
     other_picture: Optional[str]
@@ -52,11 +52,11 @@ class UsersOut(BaseModel):
 
 class EditIn(BaseModel):
     password: Optional[str]
-    first_name: str
-    last_name: str
+    first_name: Optional[str]
+    last_name: Optional[str]
     date_of_birth: Optional[str]
-    email: str
-    phone_number: int
+    email: Optional[str]
+    phone_number: Optional[int]
     gender: Optional[str]
     profile_picture_url: Optional[str]
     other_picture: Optional[str]
@@ -240,9 +240,10 @@ class UserRepository:
     def edit(
         self, username: str, user: EditIn, hashed_password: str
     ) -> Union[UsersOut, Error]:
+        print("hash in edit function: ", hashed_password)
         update_list = []
         item_dict = {
-            "password": f"{user.password}",
+            "password": f"{hashed_password}",
             "first_name": f"{user.first_name}",
             "last_name": f"{user.email}",
             "date_of_birth": f"{user.date_of_birth}",
@@ -258,17 +259,19 @@ class UserRepository:
             "matches": f"{user.matches}",
             "messages": f"{user.messages}",
         }
+        print("Item dict: ", item_dict)
 
         for key in item_dict:
-            if item_dict[key] is not None:
+            if item_dict[key] != "None":
                 update_list.append(f"{key} = '{item_dict[key]}'")
         update_string = ", ".join(update_list)
+        print("Update list: ", update_list)
         instructions = f"""UPDATE users
         SET {update_string}
         WHERE username = '{username}'
         returning id;
         """
-
+        print("instructions: ", instructions)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -282,10 +285,7 @@ class UserRepository:
     def user_in_to_out(
         self,
         username: str,
-        user: Union[
-            UsersIn,
-            EditIn,
-        ],
+        user: Union[UsersIn, EditIn],
         id: int,
     ):
         if isinstance(user, UsersIn):
