@@ -4,7 +4,48 @@
     }
 }
 
+.navigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #ffccff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+}
+
+.logout-button{
+    background-color: #ff99cc;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.logout-button a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.nav-links{
+    display: flex;
+    align-items: center;
+}
+
+.nav-link{
+    margin-right: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nav-link:hover{
+    color: #ff99cc;
+}
 
 .formContainer{
     background-color: rgb(180, 132, 180);
@@ -204,7 +245,7 @@
             }
 
             .messages{
-                background-color: pink;
+                background-color:  #ffccff;
                 padding: 10px;
                 height: calc(100% - 160px);
                 overflow: scroll;
