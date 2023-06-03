@@ -1,7 +1,7 @@
 import "./input.css";
 import React, { useEffect, useState } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-// import useUser from "./useUser";
+
 import { useNavigate } from "react-router-dom"
 
 function ProfileCard(props) {
@@ -9,10 +9,6 @@ function ProfileCard(props) {
     const { token } = useAuthContext();
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
-    // const { user } = useUser(token)
-    console.log("user:", props.user)
-
-
 
     const fetchData = async() => {
         const response =
@@ -21,9 +17,9 @@ function ProfileCard(props) {
             method: "get",
         });
         if (response.ok) {
-            // console.log("response:", response)
+
             const data = await response.json()
-            // console.log("data:", data)
+
             setUsers(data)
         } else {
             console.error(response);
@@ -112,7 +108,7 @@ function ProfileCard(props) {
             onChange={handleSearch} />
         </form></h2>
                 <div className="grid grid-cols-2 gap-1 mt-1 md:mt-1 md:grid-cols-3">
-        {filterBio.map((u) => {
+        {filterBio?.map((u) => {
             return (
         <div className="lg-gray-500" key={u.username} value={u.username}>
             <div className="max-w-sm mx-auto my-10 bg white rounded-sm shadow-md p-5">

@@ -20,15 +20,15 @@ class UsersIn(BaseModel):
     date_of_birth: str
     email: str
     phone_number: int
-    gender: Optional[str]
-    profile_picture_url: Optional[str]
-    other_picture: Optional[str]
-    pronouns: Optional[str]
-    location: Optional[str]
-    looking_for: Optional[str]
-    about_me: Optional[str]
-    matches: Optional[str]
-    messages: Optional[str]
+    # gender: Optional[str]
+    # profile_picture_url: Optional[str]
+    # other_picture: Optional[str]
+    # pronouns: Optional[str]
+    # location: Optional[str]
+    # looking_for: Optional[str]
+    # about_me: Optional[str]
+    # matches: Optional[str]
+    # messages: Optional[str]
 
 
 class UsersOut(BaseModel):
@@ -108,18 +108,10 @@ class UserRepository:
                             , last_name
                             , date_of_birth
                             , email
-                            , phone_number
-                            , gender
-                            , profile_picture_url
-                            , other_picture
-                            , pronouns
-                            , location
-                            , looking_for
-                            , about_me
-                            , matches
-                            , messages)
+                            , phone_number)
+
                         Values
-                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
                         [
@@ -130,20 +122,32 @@ class UserRepository:
                             user.date_of_birth,
                             user.email,
                             user.phone_number,
-                            user.gender,
-                            user.profile_picture_url,
-                            user.other_picture,
-                            user.pronouns,
-                            user.location,
-                            user.looking_for,
-                            user.about_me,
-                            user.matches,
-                            user.messages,
+
+
                         ],
                     )
-
+                    print(result)
+                    interests = ''
+                    gender = ''
+                    profile_picture_url = ''
+                    other_picture = ''
+                    pronouns = ''
+                    location = ''
+                    looking_for = ''
+                    about_me = ''
+                    matches = ''
+                    messages = ''
+                    blocked = ''
                     id = result.fetchone()[0]
-                    return self.user_in_to_out_hash(id, user)
+                    return self.user_in_to_out_hash(id, interests ,gender, profile_picture_url, other_picture,
+                                                    pronouns,
+                                                    location,
+                                                    looking_for,
+                                                    about_me,
+                                                    matches,
+                                                    messages,
+                                                    blocked,
+                                                    user)
 
         except Exception as e:
             print(e)
@@ -297,10 +301,26 @@ class UserRepository:
             del data["password"]
             return UsersOut(username=username, id=id, **data)
 
-    def user_in_to_out_hash(self, id: int, user: UsersIn):
+    def user_in_to_out_hash(self, id: int,
+                            interests: str,
+                            gender: str,
+                             profile_picture_url: str,
+                              other_picture: str,
+                               pronouns:str,
+                                location:str,
+                                 looking_for:str,
+                                  about_me:str,
+                                   matches:str,
+                                    messages:str,
+                                    blocked:str,
+                                      user: UsersIn):
         data = user.dict()
         del data["password"]
-        return UsersOut(id=id, **data)
+        return UsersOut(id=id, interests=interests, gender=gender, profile_picture_url=profile_picture_url,
+                        other_picture=other_picture, pronouns=pronouns,
+                         location=location, looking_for=looking_for,
+                          about_me=about_me, matches=matches,
+                           messages=messages, blocked=blocked, **data)
 
     def record_to_user_out(self, record):
         return UsersOutWithPassword(
@@ -322,3 +342,13 @@ class UserRepository:
             matches=record[15],
             messages=record[16],
         )
+
+                            # , gender
+                            # , profile_picture_url
+                            # , other_picture
+                            # , pronouns
+                            # , location
+                            # , looking_for
+                            # , about_me
+                            # , matches
+                            # , messages)

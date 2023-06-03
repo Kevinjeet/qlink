@@ -250,6 +250,7 @@ function ProfileView(props) {
     if (response.ok) {
       const data = await response.json();
       setProfile(data);
+      console.log("here", data)
     }
   };
 

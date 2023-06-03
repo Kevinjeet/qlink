@@ -12,8 +12,10 @@ import Login from "./Login";
 import Home from "./Home";
 import React from "react";
 
+
 function App(props) {
   const { token, logout } = useToken();
+
   const { user } = useUser(token);
 
 
@@ -29,7 +31,7 @@ function App(props) {
           margin: "auto",
         }}>
 
-        {user ? (
+        {token ? (
           <>
             <button onClick={logout}><a href="/signin">Logout</a></button>
             <NavLink to="/users">List of Profiles</NavLink>
@@ -47,7 +49,7 @@ function App(props) {
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/Chat" element={<Home />} />
-        <Route path="/users" element={<ProfileCard />} />
+        <Route path="/users" element={<ProfileCard user={user}/>} />
         <Route path="users/:username" element={<ProfileView user={user}/>}/>
         <Route path="/edit" element={<ProfileForm user={user} token={token} />}/>
       </Routes>

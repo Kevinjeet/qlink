@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useUser = (token) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -13,6 +13,7 @@ const useUser = (token) => {
       });
       const result = await res.json();
       setUser(result.account);
+
     };
 
     if (token) {
