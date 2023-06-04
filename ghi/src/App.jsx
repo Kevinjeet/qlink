@@ -11,6 +11,7 @@ import Login from "./Login";
 import Home from "./Home";
 import React from "react";
 import ProfileForm from "./ProfileForm"
+import ChatsPage from "./Chat";
 
 function App(props) {
   const { token, logout } = useToken();
@@ -30,7 +31,7 @@ function App(props) {
               </button>
               <nav className="nav-links">
                 <a className="nav-link" href="/users">List of Profiles</a>
-                <a className="nav-link" href="/chat">My Messages</a>
+                <a className="nav-link" href="/Chat">My Messages</a>
 
                 <a className="nav-link" href="/users/my_profile">My profile</a>
                 <a className="nav-link" href="/edit">Edit Profile</a>
@@ -39,9 +40,10 @@ function App(props) {
           </>
         ) : (
           <>
-
-            <NavLink to="/signin">Login</NavLink>
-            <NavLink to="/">Sign Up</NavLink>
+            <nav className="nav-links">
+              <a className="nav-link" href="/signin">Login</a>
+              <a className="nav-link" href="/">Sign Up Here!</a>
+            </nav>
           </>
         )}
       </div>
@@ -53,6 +55,7 @@ function App(props) {
         <Route path="/users" element={<ProfileCard user={user} />} />
         <Route path="users/:username" element={<ProfileView user={user} />} />
         <Route path="/edit" element={<ProfileForm user={user} token={token} />} />
+        <Route path="/page" element={<ChatsPage user={user} />} />
 
       </Routes>
 
