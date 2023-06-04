@@ -112,7 +112,7 @@ function ProfileCard(props) {
             onChange={handleSearch} />
         </form></h2>
                 <div className="grid grid-cols-2 gap-1 mt-1 md:mt-1 md:grid-cols-3">
-        {filterBio.map((u) => {
+        {filterBio?.map((u) => {
             return (
         <div className="lg-gray-500" key={u.username} value={u.username}>
             <div className="max-w-sm mx-auto my-10 bg white rounded-sm shadow-md p-5">
