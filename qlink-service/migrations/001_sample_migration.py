@@ -11,17 +11,17 @@ steps = [
             email VARCHAR(1000) NOT NULL UNIQUE,
             date_of_birth VARCHAR(100) NOT NULL,
             phone_number INTEGER,
-            gender VARCHAR(100),
-            profile_picture_url TEXT,
-            other_picture TEXT,
-            pronouns VARCHAR(100),
-            location VARCHAR(1000),
-            looking_for TEXT,
-            about_me TEXT,
-            matches TEXT,
-            messages TEXT,
-            interests TEXT,
-            blocked TEXT
+            gender VARCHAR(100) DEFAULT '',
+            profile_picture_url TEXT DEFAULT '',
+            other_picture TEXT DEFAULT '',
+            pronouns VARCHAR(100) DEFAULT '',
+            location VARCHAR(1000) DEFAULT '',
+            looking_for TEXT DEFAULT '',
+            about_me TEXT DEFAULT '',
+            matches TEXT DEFAULT '',
+            messages TEXT DEFAULT '',
+            interests TEXT DEFAULT '',
+            blocked TEXT DEFAULT ''
 
         );
         """,

@@ -1,19 +1,14 @@
-import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./input.css";
 import React, { useEffect, useState } from 'react';
-// import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-// import useUser from "./useUser";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+
 import { useNavigate } from "react-router-dom"
 
 function ProfileCard(props) {
     const [users, setUsers] = useState([]);
-    const { token } = useToken();
+    const { token } = useAuthContext();
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
-    // const { user } = useUser(token)
-    console.log("user: ", props.user)
-
-
 
     const fetchData = async() => {
         const response =
@@ -22,9 +17,9 @@ function ProfileCard(props) {
             method: "get",
         });
         if (response.ok) {
-            // console.log("response:", response)
+
             const data = await response.json()
-            // console.log("data:", data)
+
             setUsers(data)
         } else {
             console.error(response);
@@ -70,7 +65,7 @@ function ProfileCard(props) {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}` },
             body: JSON.stringify({
-                blocks: [...props.user.blocks, username],
+                blocked: [...props.user.blocked, username],
             }),
         })
         if (response.ok) {
@@ -90,7 +85,7 @@ function ProfileCard(props) {
         const lookingFor = user.looking_for || "";
         const interests = user.interests || "";
         if (props.user.matches.includes(user.username)
-        // || props.user.block.includes(user.username)
+        || props.user.blocked.includes(user.username)
         ) {
             return false
         }
@@ -117,7 +112,7 @@ function ProfileCard(props) {
             return (
         <div className="lg-gray-500" key={u.username} value={u.username}>
             <div className="max-w-sm mx-auto my-10 bg white rounded-sm shadow-md p-5">
-                {u.profile_picture_url !== "string" ? (
+                {u.profile_picture_url !== "" ? (
                 <img className="w-32 h-32 h-32 rounded-full mx-auto" src={u.profile_picture_url} alt="" />
         ) : (
             <img className="w-36 h-36 h-36 rounded-full mx-auto" src="/default_profile.png" alt="" />
