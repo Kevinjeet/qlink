@@ -20,15 +20,17 @@ class UsersIn(BaseModel):
     date_of_birth: str
     email: str
     phone_number: int
-    gender: Optional[str]
-    profile_picture_url: Optional[str]
-    other_picture: Optional[str]
-    pronouns: Optional[str]
-    location: Optional[str]
-    looking_for: Optional[str]
-    about_me: Optional[str]
-    matches: Optional[str]
-    messages: Optional[str]
+    # gender: Optional[str]
+    # profile_picture_url: Optional[str]
+    # other_picture: Optional[str]
+    # pronouns: Optional[str]
+    # location: Optional[str]
+    # looking_for: Optional[str]
+    # about_me: Optional[str]
+    # matches: Optional[str]
+    # messages: Optional[str]
+    # interests: Optional[str]
+    # blocked: Optional[str]
 
 
 class UsersOut(BaseModel):
@@ -48,6 +50,8 @@ class UsersOut(BaseModel):
     about_me: Optional[str]
     matches: Optional[str]
     messages: Optional[str]
+    interests: Optional[str]
+    blocked: Optional[str]
 
 
 class EditIn(BaseModel):
@@ -66,6 +70,8 @@ class EditIn(BaseModel):
     about_me: Optional[str]
     matches: Optional[str]
     messages: Optional[str]
+    interests: Optional[str]
+    blocked: Optional[str]
 
 
 class UsersOutWithPassword(UsersOut):
@@ -108,18 +114,10 @@ class UserRepository:
                             , last_name
                             , date_of_birth
                             , email
-                            , phone_number
-                            , gender
-                            , profile_picture_url
-                            , other_picture
-                            , pronouns
-                            , location
-                            , looking_for
-                            , about_me
-                            , matches
-                            , messages)
+                            , phone_number)
+
                         Values
-                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
                         [
@@ -130,20 +128,33 @@ class UserRepository:
                             user.date_of_birth,
                             user.email,
                             user.phone_number,
-                            user.gender,
-                            user.profile_picture_url,
-                            user.other_picture,
-                            user.pronouns,
-                            user.location,
-                            user.looking_for,
-                            user.about_me,
-                            user.matches,
-                            user.messages,
+
+
                         ],
                     )
-
+                    print(result)
+                    gender = ''
+                    profile_picture_url = ''
+                    other_picture = ''
+                    pronouns = ''
+                    location = ''
+                    looking_for = ''
+                    about_me = ''
+                    matches = ''
+                    messages = ''
+                    interests = ''
+                    blocked = ''
                     id = result.fetchone()[0]
-                    return self.user_in_to_out_hash(id, user)
+                    return self.user_in_to_out_hash(id, gender, profile_picture_url, other_picture,
+                                                    pronouns,
+                                                    location,
+                                                    looking_for,
+                                                    about_me,
+                                                    matches,
+                                                    messages,
+                                                    interests,
+                                                    blocked,
+                                                    user)
 
         except Exception as e:
             print(e)
@@ -171,6 +182,8 @@ class UserRepository:
                                 , about_me
                                 , matches
                                 , messages
+                                , interests
+                                , blocked
                             FROM users
                             ORDER BY id;
                         """
@@ -194,6 +207,8 @@ class UserRepository:
                             about_me=record[13],
                             matches=record[14],
                             messages=record[15],
+                            interests=record[16],
+                            blocked=record[17],
                         )
                         result.append(user)
                     return result
@@ -224,6 +239,8 @@ class UserRepository:
                             , about_me
                             , matches
                             , messages
+                            , interests
+                            , blocked
                         from users
                         where username = %s;
                         """,
@@ -240,12 +257,11 @@ class UserRepository:
     def edit(
         self, username: str, user: EditIn, hashed_password: str
     ) -> Union[UsersOut, Error]:
-        print("hash in edit function: ", hashed_password)
         update_list = []
         item_dict = {
             "password": f"{hashed_password}",
             "first_name": f"{user.first_name}",
-            "last_name": f"{user.email}",
+            "last_name": f"{user.last_name}",
             "date_of_birth": f"{user.date_of_birth}",
             "email": f"{user.email}",
             "phone_number": f"{user.phone_number}",
@@ -258,8 +274,9 @@ class UserRepository:
             "about_me": f"{user.about_me}",
             "matches": f"{user.matches}",
             "messages": f"{user.messages}",
+            "interests": f"{user.interests}",
+            "blocked": f"{user.blocked}",
         }
-        print("Item dict: ", item_dict)
 
         for key in item_dict:
             if item_dict[key] != "None":
@@ -297,10 +314,26 @@ class UserRepository:
             del data["password"]
             return UsersOut(username=username, id=id, **data)
 
-    def user_in_to_out_hash(self, id: int, user: UsersIn):
+    def user_in_to_out_hash(self, id: int,
+                            gender: str,
+                            profile_picture_url: str,
+                            other_picture: str,
+                            pronouns:str,
+                            location:str,
+                            looking_for:str,
+                            about_me:str,
+                            matches:str,
+                            messages:str,
+                            interests: str,
+                            blocked:str,
+                            user: UsersIn):
         data = user.dict()
         del data["password"]
-        return UsersOut(id=id, **data)
+        return UsersOut(id=id, gender=gender, profile_picture_url=profile_picture_url,
+                        other_picture=other_picture, pronouns=pronouns,
+                         location=location, looking_for=looking_for,
+                          about_me=about_me, matches=matches,
+                           messages=messages,interests=interests, blocked=blocked, **data)
 
     def record_to_user_out(self, record):
         return UsersOutWithPassword(
@@ -321,4 +354,6 @@ class UserRepository:
             about_me=record[14],
             matches=record[15],
             messages=record[16],
+            interests=record[17],
+            blocked=record[18],
         )
