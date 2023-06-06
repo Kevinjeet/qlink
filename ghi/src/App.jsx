@@ -1,7 +1,6 @@
-
 import { Routes, Route, NavLink } from "react-router-dom";
 import "./App.css";
-import useToken from "@galvanize-inc/jwtdown-for-react";
+import useToken, { getToken } from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
 import ProfileView from "./profileView";
@@ -9,19 +8,33 @@ import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import Home from "./Home";
-import React from "react";
-import ProfileForm from "./ProfileForm"
+import React, { useEffect, useState } from "react";
+import ProfileForm from "./ProfileForm";
+// import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function App(props) {
-  const { token, logout } = useToken();
+  const { token, logout, fetchWithToken } = useToken();
   const { user } = useUser(token);
+  const [userInfo, setUserInfo] = useState();
 
+  const refreshUserInfo = async () => {
+    if (user && user.username) {
+      const response = await fetchWithToken(
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`
+      );
+      setUserInfo(response);
+    }
+  };
 
+  useEffect(() => {
+    if (token) {
+      refreshUserInfo();
+    }
+  }, [token, user]);
 
   return (
     <>
       <div>
-
         {token ? (
           <>
             <div className="navigation">
@@ -29,11 +42,19 @@ function App(props) {
                 <a href="/signin">Logout</a>
               </button>
               <nav className="nav-links">
-                <a className="nav-link" href="/users">List of Profiles</a>
-                <a className="nav-link" href="/chat">My Messages</a>
+                <a className="nav-link" href="/users">
+                  List of Profiles
+                </a>
+                <a className="nav-link" href="/chat">
+                  My Messages
+                </a>
 
-                <a className="nav-link" href="/users/my_profile">My profile</a>
-                <a className="nav-link" href="/edit">Edit Profile</a>
+                <a className="nav-link" href="/users/my_profile">
+                  My profile
+                </a>
+                <a className="nav-link" href="/edit">
+                  Edit Profile
+                </a>
               </nav>
             </div>
           </>
@@ -49,13 +70,18 @@ function App(props) {
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/Chat" element={<Home />} />
-        <Route path="/users" element={<ProfileCard user={user}/>} />
+        <Route
+          path="/users"
+          element={
+            <ProfileCard refreshUserInfo={refreshUserInfo} user={userInfo} />
+          }
+        />
         <Route path="users/:username" element={<ProfileView user={user} />} />
-        <Route path="/edit" element={<ProfileForm user={user} token={token} />} />
-
+        <Route
+          path="/edit"
+          element={<ProfileForm user={user} token={token} />}
+        />
       </Routes>
-
-
     </>
   );
 }

@@ -1,3 +1,6 @@
+June 5, 2023
+made a push with new database, went through backend to make sure everything reflects the new databse. My profile card can now do matches and decline
+
 May 31, 2023
 Added more to the filter, now in the list of profile the current logged in user's profile wont show. Also the list of profiles will not show if they are in the loggend user's match field.
 
