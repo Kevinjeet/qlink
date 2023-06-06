@@ -1,3 +1,6 @@
+June 6, 2023
+Created a test and it passed.
+
 June 5, 2023
 made a push with new database, went through backend to make sure everything reflects the new databse. My profile card can now do matches and decline
 
