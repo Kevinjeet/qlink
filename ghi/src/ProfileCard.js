@@ -132,7 +132,7 @@ function ProfileCard(props) {
                 </div>
                 <div className="flex items-right">
                     <button className="ml-auto text-base font-medium text-blue-500 hover:text-blue-700 mx-3"
-                    onClick={() => navigate(`/users/${u.username}`)}>View Profile</button>
+                    onClick={() => navigate(`/users/${u.username}/view_profile`)}>View Profile</button>
                 </div>
             </div>
             </div>
