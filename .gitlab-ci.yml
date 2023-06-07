@@ -1,3 +1,6 @@
+services:
+  - docker:dind
+
 stages:
   - test
   - build
@@ -61,8 +64,7 @@ lint-test-job:
 
 # # Build Sample Service:
 
-services:
-  - docker:dind
+
 
 build-fastapi-service-image:
   stage: build
