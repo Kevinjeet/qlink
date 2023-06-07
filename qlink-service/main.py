@@ -17,9 +17,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.get("/")
-# def test():
-#     return {"message": "HELLO WORLD"}
+@app.get("/")
+def test():
+    return {"message": "HELLO WORLD"}
 
 # @app.get("/api/launch-details")
 # def launch_details():

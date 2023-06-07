@@ -17,7 +17,7 @@ services:
       context: qlink-service
       dockerfile: Dockerfile.dev
     ports:
-      - 8000:8000
+      - 8000:80
     volumes:
       - ./qlink-service:/app
     environment:
