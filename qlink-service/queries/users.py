@@ -6,8 +6,10 @@ from queries.pool import pool
 class DuplicateAccountError(ValueError):
     pass
 
+
 class Error(BaseModel):
     message: str
+
 
 class UsersIn(BaseModel):
     username: str
@@ -17,6 +19,7 @@ class UsersIn(BaseModel):
     date_of_birth: str
     email: str
     phone_number: int
+
 
 class UsersOut(BaseModel):
     id: int
@@ -38,6 +41,7 @@ class UsersOut(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
+
 class EditIn(BaseModel):
     password: Optional[str]
     first_name: Optional[str]
@@ -57,8 +61,10 @@ class EditIn(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
+
 class UsersOutWithPassword(UsersOut):
     hashed_password: str
+
 
 class UserRepository:
     def delete(self, user_id: int) -> bool:
@@ -110,32 +116,35 @@ class UserRepository:
                             user.date_of_birth,
                             user.email,
                             user.phone_number,
-
-
                         ],
                     )
-                    gender = ''
-                    profile_picture_url = ''
-                    other_picture = ''
-                    pronouns = ''
-                    location = ''
-                    looking_for = ''
-                    about_me = ''
-                    matches = ''
-                    messages = ''
-                    interests = ''
-                    blocked = ''
+                    gender = ""
+                    profile_picture_url = ""
+                    other_picture = ""
+                    pronouns = ""
+                    location = ""
+                    looking_for = ""
+                    about_me = ""
+                    matches = ""
+                    messages = ""
+                    interests = ""
+                    blocked = ""
                     id = result.fetchone()[0]
-                    return self.user_in_to_out_hash(id, gender, profile_picture_url, other_picture,
-                                                    pronouns,
-                                                    location,
-                                                    looking_for,
-                                                    about_me,
-                                                    matches,
-                                                    messages,
-                                                    interests,
-                                                    blocked,
-                                                    user)
+                    return self.user_in_to_out_hash(
+                        id,
+                        gender,
+                        profile_picture_url,
+                        other_picture,
+                        pronouns,
+                        location,
+                        looking_for,
+                        about_me,
+                        matches,
+                        messages,
+                        interests,
+                        blocked,
+                        user,
+                    )
 
         except Exception as e:
             print(e)
@@ -294,26 +303,39 @@ class UserRepository:
             del data["password"]
             return UsersOut(username=username, id=id, **data)
 
-    def user_in_to_out_hash(self, id: int,
-                            gender: str,
-                            profile_picture_url: str,
-                            other_picture: str,
-                            pronouns:str,
-                            location:str,
-                            looking_for:str,
-                            about_me:str,
-                            matches:str,
-                            messages:str,
-                            interests: str,
-                            blocked:str,
-                            user: UsersIn):
+    def user_in_to_out_hash(
+        self,
+        id: int,
+        gender: str,
+        profile_picture_url: str,
+        other_picture: str,
+        pronouns: str,
+        location: str,
+        looking_for: str,
+        about_me: str,
+        matches: str,
+        messages: str,
+        interests: str,
+        blocked: str,
+        user: UsersIn,
+    ):
         data = user.dict()
         del data["password"]
-        return UsersOut(id=id, gender=gender, profile_picture_url=profile_picture_url,
-                        other_picture=other_picture, pronouns=pronouns,
-                         location=location, looking_for=looking_for,
-                          about_me=about_me, matches=matches,
-                           messages=messages,interests=interests, blocked=blocked, **data)
+        return UsersOut(
+            id=id,
+            gender=gender,
+            profile_picture_url=profile_picture_url,
+            other_picture=other_picture,
+            pronouns=pronouns,
+            location=location,
+            looking_for=looking_for,
+            about_me=about_me,
+            matches=matches,
+            messages=messages,
+            interests=interests,
+            blocked=blocked,
+            **data,
+        )
 
     def record_to_user_out(self, record):
         return UsersOutWithPassword(

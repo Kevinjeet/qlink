@@ -7,6 +7,7 @@ from authenticator import authenticator
 
 client = TestClient(app)
 
+
 class UsersOut(BaseModel):
     id: int
     username: str
@@ -27,7 +28,8 @@ class UsersOut(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
-user= UsersOut(
+
+user = UsersOut(
     id=1,
     username="Rob",
     first_name="Robert",
@@ -45,12 +47,14 @@ user= UsersOut(
     matches="string",
     messages="string",
     interests="string",
-    blocked="string"
+    blocked="string",
 )
+
 
 class EmptyUserRepository:
     def get_one(self, username):
         return user
+
 
 def fake_user():
     return user
@@ -58,12 +62,13 @@ def fake_user():
 
 def test_get_one():
     app.dependency_overrides[UserRepository] = EmptyUserRepository
-    app.dependency_overrides[authenticator.get_current_account_data]=fake_user
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_user
 
-
-    response=client.get("/users/Rob")
+    response = client.get("/users/Rob")
 
     app.dependency_overrides = {}
 
-    assert response.status_code==200
-    assert response.json()== user
+    assert response.status_code == 200
+    assert response.json() == user

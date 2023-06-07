@@ -23,17 +23,22 @@ import httpx
 PROJECT_ID = "d01899ce-a15b-4f67-91a1-246aaf8ba2f0"
 PRIVATE_KEY = "def2861e-bb5c-4e68-843a-cc5b820cbf55"
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
 
+
 class AccountToken(Token):
     account: UsersOut
+
 
 class HttpError(BaseModel):
     detail: str
 
+
 router = APIRouter()
+
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
@@ -47,6 +52,7 @@ async def get_token(
             "account": account,
         }
 
+
 @router.post("/users", response_model=AccountToken | HttpError)
 async def create_user(
     user: UsersIn,
@@ -58,15 +64,16 @@ async def create_user(
     try:
         account = repo.create(user, hashed_password)
         async with httpx.AsyncClient() as client:
-            chatengine_response = await client.post('https://api.chatengine.io/users/',
+            chatengine_response = await client.post(
+                "https://api.chatengine.io/users/",
                 data={
                     "username": user.username,
-                    "secret": "1234", # assuming secret refers to password
+                    "secret": "1234",  # assuming secret refers to password
                     "email": user.email,
                     "first_name": user.first_name,
                     "last_name": user.last_name,
                 },
-                headers={ "Private-Key": PRIVATE_KEY }
+                headers={"Private-Key": PRIVATE_KEY},
             )
         if chatengine_response.status_code != 200:
             # Handle error here
@@ -81,6 +88,7 @@ async def create_user(
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
 
+
 @router.delete("/users/{user_id}", response_model=bool)
 def delete_user(
     user_id: int,
@@ -88,6 +96,7 @@ def delete_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     return repo.delete(user_id)
+
 
 @router.put("/users/{username}", response_model=Union[UsersOut, Error])
 async def update_user_(
@@ -107,6 +116,7 @@ async def update_user_(
         response.status_code = 404
     return message
 
+
 @router.get("/users", response_model=Union[List[UsersOut], Error])
 def get_all(
     response: Response,
@@ -117,6 +127,7 @@ def get_all(
     if message == {"message": "Could not get all users"}:
         response.status_code = 404
     return message
+
 
 @router.get("/users/{username}", response_model=Optional[UsersOut])
 def get_one(

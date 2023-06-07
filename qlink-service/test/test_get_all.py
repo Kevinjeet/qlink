@@ -8,6 +8,7 @@ from authenticator import authenticator
 
 client = TestClient(app)
 
+
 class UsersOut(BaseModel):
     id: int
     username: str
@@ -28,12 +29,15 @@ class UsersOut(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
+
 class FakeUserRepository:
     def get_all(self):
         return []
 
+
 def fake_user():
-    user = UsersOut(id=1,
+    user = UsersOut(
+        id=1,
         username="KG",
         first_name="Kev",
         last_name="G",
@@ -54,17 +58,19 @@ def fake_user():
     )
     return user.__dict__
 
+
 def test_get_all():
-    #Arrange
+    # Arrange
     app.dependency_overrides[UserRepository] = FakeUserRepository
     app.dependency_overrides[
-        authenticator.get_current_account_data] = fake_user
-    #Act
+        authenticator.get_current_account_data
+    ] = fake_user
+    # Act
     response = client.get("/users")
 
-    #Clean up
+    # Clean up
     app.dependency_overrides = {}
 
-    #Assert
+    # Assert
     assert response.status_code == 200
     assert response.json() == []
