@@ -54,6 +54,7 @@ class UsersOut(BaseModel):
     blocked: Optional[str]
 
 
+
 class EditIn(BaseModel):
     password: Optional[str]
     first_name: Optional[str]

@@ -30,25 +30,26 @@ const SignUp = () => {
   // const isSignIn = location.pathname.includes("signin");
 
   const handleSubmit = () => {
-    register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
+    // register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
+
     login(formData.username, formData.password);
     navigate("/users");
 
 
     }
 
-    const { username = "", first_name = "", last_name = "", email = "", password = "", date_of_birth = "", phone_number = "", interests = "", gender = "", profile_picture_url = "", other_picture = "", pronouns = "", location = "", looking_for = "", about_me = "", matches = "", messages = "" } = formData;
+    const { username = "", first_name = "", last_name = "", email = "", password = "", date_of_birth = "", phone_number = "" } = formData;
     return token ? null : (
         <div className="formContainer">
             <div className="formWrapper">
                 <span className="logo">QLink</span>
                 <span className="title">Register</span>
 
-                <form onSubmit={handleSubmit}>
+                <form>
                     <input type="text" name="username" value={username} placeholder="username" onChange={handleFormChange} />
                     <input type="text" name="first_name" value={first_name} placeholder="first name" onChange={handleFormChange} />
                     <input type="text" name="last_name" value={last_name} placeholder="last name" onChange={handleFormChange} />
-                    <input type="text" name="gender" value={gender} placeholder="gender" onChange={handleFormChange} style={{display: 'none'}} />
+                    {/* <input type="text" name="gender" value={gender} placeholder="gender" onChange={handleFormChange} style={{display: 'none'}} /> */}
 
 
                     <input type="email" name="email" value={email} placeholder="email" onChange={handleFormChange} />

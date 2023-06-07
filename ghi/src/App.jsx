@@ -8,15 +8,13 @@ import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import Home from "./Home";
-<<<<<<< HEAD
 import React from "react";
 import ProfileForm from "./ProfileForm"
-import ChatsPage from "./Chat";
-=======
-import React, { useEffect, useState } from "react";
-import ProfileForm from "./ProfileForm";
+// import ChatsPage from "./Chat";
+import { useEffect, useState } from "react";
+import ChatsPage from "./ChatsPage";
+
 // import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
->>>>>>> 9588de9dcdd3ca5990b3939e10cfa61125425041
 
 function App(props) {
   const { token, logout, fetchWithToken } = useToken();
@@ -41,10 +39,6 @@ function App(props) {
   return (
     <>
       <div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 9588de9dcdd3ca5990b3939e10cfa61125425041
         {token ? (
           <>
             <div className="navigation">
@@ -52,17 +46,12 @@ function App(props) {
                 <a href="/signin">Logout</a>
               </button>
               <nav className="nav-links">
-<<<<<<< HEAD
-                <a className="nav-link" href="/users">List of Profiles</a>
-                <a className="nav-link" href="/Chat">My Messages</a>
-=======
                 <a className="nav-link" href="/users">
                   List of Profiles
                 </a>
                 <a className="nav-link" href="/chat">
                   My Messages
                 </a>
->>>>>>> 9588de9dcdd3ca5990b3939e10cfa61125425041
 
                 <a className="nav-link" href="/users/my_profile">
                   My profile
@@ -86,14 +75,7 @@ function App(props) {
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
-        <Route path="/Chat" element={<Home />} />
-<<<<<<< HEAD
-        <Route path="/users" element={<ProfileCard user={user} />} />
-        <Route path="users/:username" element={<ProfileView user={user} />} />
-        <Route path="/edit" element={<ProfileForm user={user} token={token} />} />
-        <Route path="/page" element={<ChatsPage user={user} />} />
-
-=======
+        <Route path="/chat" element={<ChatsPage user={user} />} />
         <Route
           path="/users"
           element={
@@ -105,7 +87,6 @@ function App(props) {
           path="/edit"
           element={<ProfileForm user={user} token={token} />}
         />
->>>>>>> 9588de9dcdd3ca5990b3939e10cfa61125425041
       </Routes>
     </>
   );

@@ -99,55 +99,12 @@ function ProfileCard({ user, refreshUserInfo }) {
       return false;
     }
     return (
-<<<<<<< HEAD
-        <>
-        <section className="small-white dark:bg-gray-900">
-            <div className="container px-3 py-5 mx-auto">
-            <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">List of Potential Matches</h1>
-            <h2><form className="searchBar">
-            <input type="text"
-            className="searchBarinput"
-            placeholder="search preferences"
-            value={search}
-            onChange={handleSearch} />
-        </form></h2>
-                <div className="grid grid-cols-2 gap-1 mt-1 md:mt-1 md:grid-cols-3">
-        {filterBio?.map((u) => {
-            return (
-        <div className="lg-gray-500" key={u.username} value={u.username}>
-            <div className="max-w-sm mx-auto my-10 bg white rounded-sm shadow-md p-5">
-                {u.profile_picture_url !== "string" ? (
-                <img className="w-32 h-32 h-32 rounded-full mx-auto" src={u.profile_picture_url} alt="" />
-        ) : (
-            <img className="w-36 h-36 h-36 rounded-full mx-auto" src="/default_profile.png" alt="" />
-        )}
-                <h1 className="text-center text-2xl font-bold mt-3">{u.username}</h1>
-                <h2 className="text-center text-2xl font-semibold mt-3">{u.first_name} {u.last_name}</h2>
-                <p className="text-center text-gray-600 mt-1">{u.location}</p>
-                <div className="flex justify-center mt-5">
-                    <button className="text-blue-500 hover:text-blue-700 mx-3"
-                    onClick={() => blockButton(u.username)}>Decline</button>
-                    <button className="text-blue-500 hover:text-blue-700 mx-3"
-                    onClick={() => matchButton(u.username)}>Match</button>
-                </div>
-                <div className="mt-5">
-                    <h3 className="text-xl font-semibold">Bio</h3>
-                    <p className="text-gray-600 mt-2">{u.about_me}</p>
-                </div>
-                <div className="flex items-right">
-                    <button className="ml-auto text-base font-medium text-blue-500 hover:text-blue-700 mx-3"
-                    onClick={() => navigate(`/users/${u.username}`)}>View Profile</button>
-                </div>
-            </div>
-            </div>
-=======
       (aboutMe.toLowerCase().includes(search) ||
         lookingFor.toLowerCase().includes(search) ||
         interests.toLowerCase().includes(search)) &&
       user?.username !== u.username
     );
   });
->>>>>>> 9588de9dcdd3ca5990b3939e10cfa61125425041
 
   return (
     <>
