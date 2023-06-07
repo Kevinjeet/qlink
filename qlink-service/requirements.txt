@@ -4,3 +4,4 @@ uvicorn[standard]==0.17.6
 psycopg[binary,pool]==3.0.14
 pytest
 httpx
+pytest==7.1.2

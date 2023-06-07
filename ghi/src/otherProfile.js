@@ -60,7 +60,9 @@ function OtherProfile() {
               <td>
                 <img src={profile.profile_picture_url} alt="Profile" />
               </td>
-              <td>{profile.other_picture}</td>
+              <td>
+                <img src= {profile.other_picture} alt="Other"/>
+              </td>
               <td>{profile.pronouns}</td>
               <td>{profile.location}</td>
               <td>{profile.looking_for}</td>
