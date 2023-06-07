@@ -18,7 +18,10 @@ from queries.users import (
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
+import httpx
 
+PROJECT_ID = "d01899ce-a15b-4f67-91a1-246aaf8ba2f0"
+PRIVATE_KEY = "def2861e-bb5c-4e68-843a-cc5b820cbf55"
 
 class AccountForm(BaseModel):
     username: str
@@ -59,18 +62,29 @@ async def create_user(
     hashed_password = authenticator.hash_password(user.password)
     try:
         account = repo.create(user, hashed_password)
+        async with httpx.AsyncClient() as client:
+            chatengine_response = await client.post('https://api.chatengine.io/users/',
+                data={
+                    "username": user.username,
+                    "secret": "1234", # assuming secret refers to password
+                    "email": user.email,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                },
+                headers={ "Private-Key": PRIVATE_KEY }
+            )
+        if chatengine_response.status_code != 200:
+            # Handle error here
+            print("status 200")
+
     except DuplicateAccountError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create an user with those credentials",
+            detail="Cannot create a user with those credentials",
         )
     form = AccountForm(username=user.username, password=user.password)
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
-    # message = repo.create(user)
-    # if message == {'message': 'could not create'}:
-    #     response.status_code = 404
-    # return message
 
 
 @router.delete("/users/{user_id}", response_model=bool)

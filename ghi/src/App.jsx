@@ -7,9 +7,10 @@ import ProfileView from "./profileView";
 import "./style.scss";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import Home from "./Home";
 import React, { useEffect, useState } from "react";
 import ProfileForm from "./ProfileForm";
+import ChatsPage from "./ChatsPage";
+
 // import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function App(props) {
@@ -60,8 +61,10 @@ function App(props) {
           </>
         ) : (
           <>
-            <NavLink to="/signin">Login</NavLink>
-            <NavLink to="/">Sign Up</NavLink>
+            <nav className="nav-links">
+              <a className="nav-link" href="/signin">Login</a>
+              <a className="nav-link" href="/">Sign Up Here!</a>
+            </nav>
           </>
         )}
       </div>
@@ -69,7 +72,7 @@ function App(props) {
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
         <Route path="/signin" element={<Login />} />
-        <Route path="/Chat" element={<Home />} />
+        <Route path="/chat" element={<ChatsPage user={user} />} />
         <Route
           path="/users"
           element={
