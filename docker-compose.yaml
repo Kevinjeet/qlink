@@ -22,7 +22,7 @@ services:
       - ./qlink-service:/app
     environment:
       SIGNING_KEY: qlink
-      WAIT_HOSTS: db:5432
+      WAIT_HOSTS: qlink-db:5432
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
       DATABASE_URL: postgresql://qlink:qlink@qlink-db/qlink

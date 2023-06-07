@@ -12,7 +12,7 @@ lint-test-job:
   stage: test
   script:
     - pip install flake8
-    - flake8 sample_service
+    - flake8 qlink-service
 #
 # # Run the unit tests
 # api-unit-tests-job:
