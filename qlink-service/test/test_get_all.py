@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
 from fastapi.testclient import TestClient
 from main import app
 from queries.users import UserRepository
