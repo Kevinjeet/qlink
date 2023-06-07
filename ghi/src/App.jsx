@@ -10,6 +10,7 @@ import Login from "./Login";
 import React, { useEffect, useState } from "react";
 import ProfileForm from "./ProfileForm";
 import ChatsPage from "./ChatsPage";
+import OtherProfile from "./otherProfile";
 
 
 function App(props) {
@@ -81,7 +82,7 @@ function App(props) {
           }
         />
         <Route path="users/:username" element={<ProfileView user={user} />} />
-        <Route path="users/:username/profile_view" element={<OtherProfile/>}/>
+        <Route path="users/:username/view_profile" element={<OtherProfile/>}/>
         <Route
           path="/edit"
           element={<ProfileForm user={user} token={token} />}

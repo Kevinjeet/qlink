@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=qlink
     ports:
       - 15432:5432
-  fastapi:
+  qlink-fastapi:
     build:
       context: qlink-service
       dockerfile: Dockerfile.dev
