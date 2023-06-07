@@ -9,13 +9,11 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <BrowserRouter basename="/">
       <AuthProvider baseUrl={process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}>
         <App />
       </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

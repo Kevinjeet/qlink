@@ -1,8 +1,6 @@
 import "./input.css";
 import React, { useEffect, useState } from "react";
-// import useUser from "./useUser";
 import { useNavigate } from "react-router-dom";
-// import useToken, {getToken} from "@galvanize-inc/jwtdown-for-react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function ProfileCard({ user, refreshUserInfo }) {
@@ -10,7 +8,6 @@ function ProfileCard({ user, refreshUserInfo }) {
   const { token } = useAuthContext();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  // const { user } = useUser(token);
 
   const fetchData = async () => {
     const response = await fetch(
@@ -22,7 +19,6 @@ function ProfileCard({ user, refreshUserInfo }) {
     );
     if (response.ok) {
       const data = await response.json();
-      console.log("data,", data);
       setUsers(data);
     } else {
       console.error(response);

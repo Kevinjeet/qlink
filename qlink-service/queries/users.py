@@ -1,16 +1,13 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union
-
 from queries.pool import pool
 
 
 class DuplicateAccountError(ValueError):
     pass
 
-
 class Error(BaseModel):
     message: str
-
 
 class UsersIn(BaseModel):
     username: str
@@ -20,18 +17,6 @@ class UsersIn(BaseModel):
     date_of_birth: str
     email: str
     phone_number: int
-    # gender: Optional[str]
-    # profile_picture_url: Optional[str]
-    # other_picture: Optional[str]
-    # pronouns: Optional[str]
-    # location: Optional[str]
-    # looking_for: Optional[str]
-    # about_me: Optional[str]
-    # matches: Optional[str]
-    # messages: Optional[str]
-    # interests: Optional[str]
-    # blocked: Optional[str]
-
 
 class UsersOut(BaseModel):
     id: int
@@ -53,7 +38,6 @@ class UsersOut(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
-
 class EditIn(BaseModel):
     password: Optional[str]
     first_name: Optional[str]
@@ -73,10 +57,8 @@ class EditIn(BaseModel):
     interests: Optional[str]
     blocked: Optional[str]
 
-
 class UsersOutWithPassword(UsersOut):
     hashed_password: str
-
 
 class UserRepository:
     def delete(self, user_id: int) -> bool:
@@ -132,7 +114,6 @@ class UserRepository:
 
                         ],
                     )
-                    print(result)
                     gender = ''
                     profile_picture_url = ''
                     other_picture = ''
@@ -282,13 +263,12 @@ class UserRepository:
             if item_dict[key] != "None":
                 update_list.append(f"{key} = '{item_dict[key]}'")
         update_string = ", ".join(update_list)
-        print("Update list: ", update_list)
         instructions = f"""UPDATE users
         SET {update_string}
         WHERE username = '{username}'
         returning id;
         """
-        print("instructions: ", instructions)
+
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

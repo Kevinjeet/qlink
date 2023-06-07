@@ -1,11 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
 
 function ProfileView(props) {
   const [profile, setProfile] = useState();
   const { token } = useAuthContext();
-  console.log(props.user);
 
   const getProfile = async () => {
     const response = await fetch(

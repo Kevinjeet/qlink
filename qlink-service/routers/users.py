@@ -27,17 +27,13 @@ class AccountForm(BaseModel):
     username: str
     password: str
 
-
 class AccountToken(Token):
     account: UsersOut
-
 
 class HttpError(BaseModel):
     detail: str
 
-
 router = APIRouter()
-
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
@@ -50,7 +46,6 @@ async def get_token(
             "type": "Bearer",
             "account": account,
         }
-
 
 @router.post("/users", response_model=AccountToken | HttpError)
 async def create_user(
@@ -86,7 +81,6 @@ async def create_user(
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
 
-
 @router.delete("/users/{user_id}", response_model=bool)
 def delete_user(
     user_id: int,
@@ -94,7 +88,6 @@ def delete_user(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     return repo.delete(user_id)
-
 
 @router.put("/users/{username}", response_model=Union[UsersOut, Error])
 async def update_user_(
@@ -108,13 +101,11 @@ async def update_user_(
         hashed_password = authenticator.hash_password(user.password)
     else:
         hashed_password = "None"
-    print("hash:", hashed_password)
     message = repo.edit(username, user, hashed_password)
 
     if message == {"message": "ID doesn't exist"}:
         response.status_code = 404
     return message
-
 
 @router.get("/users", response_model=Union[List[UsersOut], Error])
 def get_all(
@@ -126,7 +117,6 @@ def get_all(
     if message == {"message": "Could not get all users"}:
         response.status_code = 404
     return message
-
 
 @router.get("/users/{username}", response_model=Optional[UsersOut])
 def get_one(

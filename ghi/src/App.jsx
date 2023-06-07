@@ -1,6 +1,6 @@
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import useToken, { getToken } from "@galvanize-inc/jwtdown-for-react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
 import useUser from "./useUser.js";
 import ProfileView from "./profileView";
@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import ProfileForm from "./ProfileForm";
 import ChatsPage from "./ChatsPage";
 
-// import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
 function App(props) {
   const { token, logout, fetchWithToken } = useToken();
@@ -60,11 +59,13 @@ function App(props) {
             </div>
           </>
         ) : (
-          <>
+            <>
+            <div className="navigation">
             <nav className="nav-links">
               <a className="nav-link" href="/signin">Login</a>
               <a className="nav-link" href="/">Sign Up Here!</a>
             </nav>
+            </div>
           </>
         )}
       </div>

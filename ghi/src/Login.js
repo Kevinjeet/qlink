@@ -4,14 +4,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./style.scss";
 
-
-
-
 const Login = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
-
   const { token, login } = useToken();
 
   useEffect(() => {

@@ -6,12 +6,10 @@ function OtherProfile() {
   const [profile, setProfile] = useState(null);
   const {username}= useParams();
   const { token } = useAuthContext();
-  console.log("Working")
-  console.log(username)
+
   useEffect(() => {
     const getProfile = async () => {
       try {
-        console.log(username)
         const response = await fetch(
           `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${username}`,
           {

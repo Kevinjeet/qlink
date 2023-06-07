@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
 import useToken from '@galvanize-inc/jwtdown-for-react';
 
 
@@ -56,7 +55,6 @@ function ProfileForm(props) {
 
 
         const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`;
-        console.log(url)
         const fetchConfig = {
             method: "put",
             body: JSON.stringify(profile),
@@ -89,7 +87,6 @@ function ProfileForm(props) {
     useEffect(() => {
         if (props.user.username){
             const fetchData = async () => {
-                console.log(props.user.username)
                 const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
