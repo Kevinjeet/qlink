@@ -25,7 +25,7 @@ services:
       WAIT_HOSTS: db:5432
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
-      DATABASE_URL: postgresql://qlink:qlink@db/qlink
+      DATABASE_URL: postgresql://qlink:qlink@qlink-db/qlink
 
   ghi:
     image: node:lts-bullseye

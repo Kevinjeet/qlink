@@ -81,6 +81,7 @@ function App(props) {
           }
         />
         <Route path="users/:username" element={<ProfileView user={user} />} />
+        <Route path="users/:username/profile_view" element={<OtherProfile/>}/>
         <Route
           path="/edit"
           element={<ProfileForm user={user} token={token} />}
