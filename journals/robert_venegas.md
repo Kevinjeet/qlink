@@ -43,3 +43,48 @@ Worked on auth with Kevinjeet, we now have a create a user function that creates
 ```
 Worked on auth for update user with Dylan. Finally got it to work properly. AUTH=SITH
 ```
+
+#### 5.24
+```
+added protected endpoints to our routers, we finished backend auth
+```
+
+#### 5.25
+```
+started working on our frontend portions, i have view a profile page
+```
+
+#### 5.29
+```
+working on frontend having trouble getting auth to work on my frontend page
+```
+
+#### 5.30
+```
+No real changes still working on my frontend page.
+```
+
+#### 5.31
+```
+got my front end page to finally show the user data. now i just have to make it look good. had a meeting with james to get some help.
+```
+
+#### 6.1
+```
+Merged our work together, i added some styling to my page, still barebones and having trouble with my picture sizes, might work on formatting as well.
+```
+
+#### 6.2
+```
+We completed styling and getting frontend functionality working we are able to login, view a suer profile, sign up. Backend is working mostly need to fix edit function. I also need to create another profile view page to look at someone elses profile. grabbing logged in user data is fine but i need to access the same endpoint to grab another user. We are grabbing info by username, i was thinking about creating another hook to grab another profile.
+```
+
+#### 6.5
+```
+having trouble grabbing the other profiles info, when i click on the link to view a profile it still shows the logged in user info, the url changes so it knows it changed, but i think it gets "confused" on what to grab since im grabbing by the username but the user data is getting grabbed again. I talked to a seir and she mentioned using useParams to grab the username that we want and not use props for this page.
+```
+
+#### 6.6
+```
+completed the other profile view page, i ended up using useParams and setting it to username and it worked!! didnt have to use another custom hook and i took off props on this page. it was coming out undefined cause the username wasnt getting grabbed.
+```
