@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
@@ -18,6 +18,7 @@ function App(props) {
   const { token, logout, fetchWithToken } = useToken();
   const { user } = useUser(token);
   const [userInfo, setUserInfo] = useState();
+  const navigate = useNavigate();
 
   const refreshUserInfo = async () => {
     if (user && user.username) {
@@ -29,9 +30,10 @@ function App(props) {
   };
 
   useEffect(() => {
-
     if (token) {
       refreshUserInfo();
+    } else {
+      navigate('/signin')
     }
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
