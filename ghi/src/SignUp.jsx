@@ -7,13 +7,13 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-  const { token, login, register } = useToken();
+  const { token, login } = useToken();
 
   useEffect(() => {
     if (token) {
       navigate("/users");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -22,11 +22,30 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = () => {
-    register(formData, `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`);
-    login(formData.username, formData.password);
-    navigate("/users");
-  }
+const handleSubmit = (e) => {
+  e.preventDefault();
+  fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Registration failed');
+      }
+      return res.json();
+    })
+    .then((data) => {
+      login(formData.username, formData.password);
+      navigate("/users");
+    })
+    .catch((error) => {
+      console.error('Registration failed:', error);
+    });
+};
+
 
     const { username = "", first_name = "", last_name = "", email = "", password = "", date_of_birth = "", phone_number = "" } = formData;
     return token ? null : (
@@ -43,11 +62,6 @@ const SignUp = () => {
                     <label htmlFor="DOB">DOB</label>
                     <input type="date" name="date_of_birth" value={date_of_birth} id="DOB" onChange={handleFormChange} />
                     <input type="tel" name="phone_number" value={phone_number} placeholder="phone number" onChange={handleFormChange} />
-                    {/* <input style={{display:"none"}} name="file" type="file" id="file" onChange={handleFormChange} />
-                    <label htmlFor="file">
-                        <img width="40" height='40' src={Avatar} alt="" />
-                        <span>Add an Avatar</span>
-                    </label> */}
                     <button onClick={handleSubmit}>Sign Up</button>
                 </form>
                 <p>Do you have an account already? <a href="/signin">Login</a></p>
