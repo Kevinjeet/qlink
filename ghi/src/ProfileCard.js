@@ -156,7 +156,7 @@ function ProfileCard({ user, refreshUserInfo }) {
                     ) : (
                       <img
                         className="w-36 h-36 h-36 rounded-full mx-auto"
-                        src="/default_profile.png"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO6WTRclumNWfdBvP2VabpY9vACdKKpBoapA&usqp=CAU"
                         alt=""
                       />
                     )}
