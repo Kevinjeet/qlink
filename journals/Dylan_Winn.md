@@ -1,3 +1,15 @@
+6/7
+Got pytest for edit function completely working
+
+6/6
+Still tried working on pytest, still pretty lost. Watched videos, read documentation, read learn modules. Worked some with instructors, got some down, but not working yet
+
+6/5
+Started working on Pytest, watched videos, pretty lost
+
+6/2
+Edit Function got 100% working as intended, also added Blocked and Interests fields in models
+
 6/1
 After pushing yesterday, everything broke, but got it working again.
 Turns out I did not have PUT requests working with any number of fields, but I do now,
