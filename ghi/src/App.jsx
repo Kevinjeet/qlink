@@ -30,11 +30,17 @@ function App(props) {
   };
 
   useEffect(() => {
+    const timer =setTimeout(() => {
+    console.log("second")
     if (token) {
       refreshUserInfo();
     } else {
       navigate('/signin')
     }
+    }, 4000);
+
+    return () => clearTimeout(timer);
+
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
