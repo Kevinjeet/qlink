@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 
 const domain = /https:\/\/[^/]+/;
-const basename = process.evn.PUBLIC_URL.replace(domain, '');
+const basename = process.env.PUBLIC_URL.replace(domain, '');
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <BrowserRouter basename={basename}>
