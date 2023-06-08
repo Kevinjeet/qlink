@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import ProfileForm from "./ProfileForm";
 import ChatsPage from "./ChatsPage";
 import OtherProfile from "./otherProfile";
+import { NavLink } from "react-router-dom";
 
 
 function App(props) {
@@ -41,22 +42,22 @@ function App(props) {
           <>
             <div className="navigation">
               <button className="logout-button" onClick={logout}>
-                <a href="/signin">Logout</a>
+                <NavLink to="/signin">Logout</NavLink>
               </button>
               <nav className="nav-links">
-                <a className="nav-link" href="/users">
+                <NavLink className="nav-link" to="/users">
                   List of Profiles
-                </a>
-                <a className="nav-link" href="/chat">
+                </NavLink>
+                <NavLink className="nav-link" to="/chat">
                   My Messages
-                </a>
+                </NavLink>
 
-                <a className="nav-link" href="/users/my_profile">
+                <NavLink className="nav-link" to="/users/my_profile">
                   My profile
-                </a>
-                <a className="nav-link" href="/edit">
+                </NavLink>
+                <NavLink className="nav-link" to="/edit">
                   Edit Profile
-                </a>
+                </NavLink>
               </nav>
             </div>
           </>
@@ -64,8 +65,8 @@ function App(props) {
             <>
             <div className="navigation">
             <nav className="nav-links">
-              <a className="nav-link" href="/signin">Login</a>
-              <a className="nav-link" href="/">Sign Up Here!</a>
+              <NavLink className="nav-link" to ="/signin">Login</NavLink>
+              <NavLink className="nav-link" to ="/">Sign Up Here!</NavLink>
             </nav>
             </div>
           </>
