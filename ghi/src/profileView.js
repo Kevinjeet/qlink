@@ -5,7 +5,23 @@ function ProfileView(props) {
   const [profile, setProfile] = useState();
   const { token } = useAuthContext();
 
-  const getProfile = async () => {
+  // const getProfile = async () => {
+  //   const response = await fetch(
+  //     `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
+  //     {
+  //       credentials: 'include',
+  //       headers: { Authorization: `Bearer ${token}` },
+  //       method: 'get',
+  //     }
+  //   );
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     setProfile(data);
+  //   }
+  // };
+
+  useEffect(() => {
+      const getProfile = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
       {
@@ -19,8 +35,6 @@ function ProfileView(props) {
       setProfile(data);
     }
   };
-
-  useEffect(() => {
     if (props.user) {
       getProfile();
     }
@@ -59,7 +73,7 @@ function ProfileView(props) {
               {profile && profile.profile_picture_url ? (
                 <img
                   src={profile.profile_picture_url}
-                  alt="Profile Picture"
+                  alt=""
                   style={{ width: '400px', height: '400px' }}
                   className="square-full"
                 />
@@ -71,7 +85,7 @@ function ProfileView(props) {
           <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Other Picture</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700">
-              {profile && profile.other_picture ? <img src={profile.other_picture} alt="Other Picture" style={{ width: '300px', height: '300px' }} className="square-full"/> : '-'}
+              {profile && profile.other_picture ? <img src={profile.other_picture} alt="" style={{ width: '300px', height: '300px' }} className="square-full"/> : '-'}
             </dd>
           </div>
         </dl>

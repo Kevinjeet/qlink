@@ -28,10 +28,11 @@ function App(props) {
   };
 
   useEffect(() => {
+
     if (token) {
       refreshUserInfo();
     }
-  }, [token, user]);
+  }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

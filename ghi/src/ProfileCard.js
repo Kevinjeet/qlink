@@ -9,7 +9,26 @@ function ProfileCard({ user, refreshUserInfo }) {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  // const fetchData = async () => {
+  //   const response = await fetch(
+  //     `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`,
+  //     {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //       method: "get",
+  //     }
+  //   );
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     setUsers(data);
+  //   } else {
+  //     console.error(response);
+  //     const errorData = await response.json();
+  //     console.error(errorData);
+  //   }
+  // };
+
+  useEffect(() => {
+      const fetchData = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`,
       {
@@ -26,8 +45,6 @@ function ProfileCard({ user, refreshUserInfo }) {
       console.error(errorData);
     }
   };
-
-  useEffect(() => {
     if (token) {
       fetchData();
     }

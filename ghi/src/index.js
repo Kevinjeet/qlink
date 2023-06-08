@@ -6,10 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 
-
+const domain = /https:\/\/[^/]+/;
+const basename = process.evn.PUBLIC_URL.replace(domain, '');
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <BrowserRouter basename="/">
+    <BrowserRouter basename={basename}>
       <AuthProvider baseUrl={process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}>
         <App />
       </AuthProvider>

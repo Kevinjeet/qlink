@@ -11,10 +11,11 @@ const Login = () => {
   const { token, login } = useToken();
 
   useEffect(() => {
+
     if (token) {
       navigate("/users");
     }
-  }, [token]);
+  }, [token, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({
