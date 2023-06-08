@@ -1,8 +1,6 @@
-from pydantic import BaseModel
-from typing import Optional, List
 from fastapi.testclient import TestClient
 from main import app
-from queries.users import UserRepository, EditIn, UsersOut
+from queries.users import UserRepository
 from authenticator import authenticator
 
 
