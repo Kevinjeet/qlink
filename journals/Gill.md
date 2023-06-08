@@ -1,3 +1,9 @@
+June 8, 2023
+compoleted front end deployment
+
+June 7, 2023
+Completed the back end deployment as a group
+
 June 6, 2023
 Created a test and it passed.
 
