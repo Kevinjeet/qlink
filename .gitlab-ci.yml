@@ -15,15 +15,23 @@ lint-test-job:
     - flake8 qlink-service
 #
 # # Run the unit tests
-# api-unit-tests-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd sample_service
-#     - pip install -r requirements.txt
-#     - python -m pytest
+api-unit-tests-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  variables:
+    DATABASE_URL: postgresql://qlink:qlink@qlink-db/qlink
+    SIGNING_KEY: qlink
+    WAIT_HOSTS: qlink-db:5432
+  script:
+    - cd qlink-service
+    - pip install pytest
+    - pip install fastapi[all]
+    - pip install jwtdown-fastapi
+    - pip install psycopg[binary,pool]
+    - pip install uvicorn[standard]
+    - python -m pytest
 
 # # Build the React/JavaScript front-end
 build-front-end-job:

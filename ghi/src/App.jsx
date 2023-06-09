@@ -31,7 +31,6 @@ function App(props) {
   const click = () => {
     logout();
     const timer = setTimeout(() => {
-      console.log("here");
       navigate("/signin");
     }, 500);
     return () => clearTimeout(timer);
@@ -41,7 +40,6 @@ function App(props) {
     console.log("app", token);
     if (token) {
       refreshUserInfo();
-      console.log("user info refresh");
     } else if (location.pathname.includes("user")) {
       const timer = setTimeout(() => {
         if (!token) {
@@ -50,14 +48,7 @@ function App(props) {
       }, 5000);
       return () => clearTimeout(timer);
     }
-    // const timer =setTimeout(() => {
-    // console.log("timer")
-    // if (!token) {
-    //   console.log("no token?")
-    //   navigate('/signin')
-    // }
-    // }, 4000);
-    // return () => clearTimeout(timer);
+
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
