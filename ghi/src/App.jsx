@@ -87,6 +87,7 @@ function App(props) {
 
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
+
         <Route path="/signin" element={<Login />} />
         <Route path="/chat" element={<ChatsPage user={user} />} />
         <Route

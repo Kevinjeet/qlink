@@ -347,3 +347,57 @@
         }
     }
 }
+.matches-section {
+  width: 90%;
+  margin: auto;
+  background: #ffffff;
+
+  .title {
+    text-align: center;
+    color: #800080; // purple color
+    font-size: 2.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+
+  .matches-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .match-card {
+      flex: 1 0 20%;
+      margin: 1rem;
+      padding: 1rem;
+      background: #ff4500; // orange color
+      color: #ffffff; // white color
+      border-radius: 15px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      text-align: center;
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      button {
+        color: #ffffff; // white color
+        background: #800080; // purple color
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+          background: #6a0dad; // dark purple color
+        }
+      }
+    }
+  }
+}
