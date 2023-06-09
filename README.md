@@ -48,8 +48,8 @@ From /token/ you can:
 You can also print Hello World at `/` with nothing after it.
 
 When creating a user, follow this format:
-
-: >`{
+```
+{
   "username": "string",
   "password": "string",
   "first_name": "string",
@@ -57,11 +57,12 @@ When creating a user, follow this format:
   "date_of_birth": "string",
   "email": "string",
   "phone_number": 0
-}`
+}
+```
 
 When getting a response in from any API call involving a user, it will follow this format:
-
-: >`{
+```
+{
   "id": 0,
   "username": "string",
   "first_name": "string",
@@ -80,10 +81,12 @@ When getting a response in from any API call involving a user, it will follow th
   "messages": "string",
   "interests": "string",
   "blocked": "string"
-}`
+}
+```
 
 And when editing a user, you can edit any or all of the of the following fields in this format:
-: >`{
+```
+{
   "password": "string",
   "first_name": "string",
   "last_name": "string",
@@ -101,33 +104,34 @@ And when editing a user, you can edit any or all of the of the following fields 
   "messages": "string",
   "interests": "string",
   "blocked": "string"
-}`
+}
+```
 
 Please note that it is **_not_** possible to edit username or id via the API. This is intentional.
 
 ### Data Model
 
-| Name                |  Type   | Unique | Optional |
-| :------------------ | :-----: | -----: | -------: |
-| id                  | string  |     no |      yes |
-| username            | varchar |    yes |       no |
-| password            | varchar |     no |       no |
-| first_name          | varchar |     no |       no |
-| last_name           | varchar |     no |      yes |
-| date_of_birth       | varchar |     no |       no |
-| email               | varchar |    yes |       no |
-| phone_numnber       |   int   |     no |       no |
-| gender              | varchar |     no |      yes |
-| profile_picture_url | varchar |     no |      yes |
-| other_picture       | varchar |     no |      yes |
-| pronouns            | varchar |     no |      yes |
-| location            | varchar |     no |      yes |
-| looking_for         | varchar |     no |      yes |
-| about_me            | varchar |     no |      yes |
-| matches             | varchar |     no |      yes |
-| messages            | varchar |     no |      yes |
-| interests           | varchar |     no |      yes |
-| blocked             | varchar |     no |      yes |
+| Name                |  Type   | Unique | Optional | Primary Key |
+| :------------------ | :-----: | -----: | -----: | -----: |
+| id                  | string  |     no |      yes | yes |
+| username            | varchar |    yes |       no | no |
+| password            | varchar |     no |       no | no |
+| first_name          | varchar |     no |       no | no |
+| last_name           | varchar |     no |      yes | no |
+| date_of_birth       | varchar |     no |       no | no |
+| email               | varchar |    yes |       no | no |
+| phone_numnber       |   int   |     no |       no | no |
+| gender              | varchar |     no |      yes | no |
+| profile_picture_url | varchar |     no |      yes | no |
+| other_picture       | varchar |     no |      yes | no |
+| pronouns            | varchar |     no |      yes | no |
+| location            | varchar |     no |      yes | no |
+| looking_for         | varchar |     no |      yes | no |
+| about_me            | varchar |     no |      yes | no |
+| matches             | varchar |     no |      yes | no |
+| messages            | varchar |     no |      yes | no |
+| interests           | varchar |     no |      yes | no |
+| blocked             | varchar |     no |      yes | no |
 
 ### GHI
 
@@ -161,6 +165,8 @@ On the Chat page you can access all users and talk to them globally.
 
 - Access by hitting the + button and search for a user or hit the down arrow key and names should pop up
 - Send them a message and all messaging should be in real time.
+
+![alt text](Qlink-Excalidraw.png)
 
 ### Intended Market
 
