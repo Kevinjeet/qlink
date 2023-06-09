@@ -1,10 +1,11 @@
 # QLink
+
 ## QLink - Love is Love: Connect, date, and celebrate your queerness!
 
-*Avisha Achaal
+_Avisha Achaal
 Kevinjeet Gill
 Robert Venegas
-Dylan Winn*
+Dylan Winn_
 
 [General Design](#general-design)
 
@@ -21,10 +22,11 @@ Dylan Winn*
 [Project Initialization for Local Version](#project-initialization-for-local-version)
 
 ### General Design
+
 This application is has been designed as a dating app with the LGBTQ+ community in mind, taking into account multiple things other dating apps may miss. For instance, both the gender a person is looking for and the user's own gender, rather than being dropdowns, are just text boxes. This allows for a greater range in options and for everyone's gender identity to be represented
 
-
 ### API design
+
 The GHI for the API can be accessed [here](https://feb-23-pt-7-qlink-fastapi.mod3projects.com/docs), or you can access the API directly using [https://feb-23-pt-7-qlink-fastapi.mod3projects.com/{your endpoint of choice}](https://feb-23-pt-7-qlink-fastapi.mod3projects.com/). It has endpoints for creating users, editing and deleting users, signing in and out, as well as listing all users or just one.
 
 From /users/ you can:
@@ -101,34 +103,34 @@ And when editing a user, you can edit any or all of the of the following fields 
   "blocked": "string"
 }`
 
-Please note that it is ***not*** possible to edit username or id via the API. This is intentional.
-
+Please note that it is **_not_** possible to edit username or id via the API. This is intentional.
 
 ### Data Model
-| Name |  Type  | Unique | Optional |
-|:-----|:--------:|------:|-------:|
-| id  |  string  |  no | yes |
-| username  |  varchar  |  yes | no |
-| password  |  varchar  |  no | no |
-| first_name  | varchar |   no | no |
-| last_name  | varchar | no | yes |
-| date_of_birth   |  varchar  |  no | no |
-| email   | varchar | yes | no |
-| phone_numnber   | int | no | no |
-| gender  | varchar | no | yes |
-| profile_picture_url  | varchar | no | yes |
-| other_picture  | varchar | no | yes |
-| pronouns  | varchar | no | yes |
-| location   |  varchar  | no | yes |
-| looking_for | varchar | no | yes |
-| about_me| varchar | no | yes |
-| matches  | varchar | no | yes |
-| messages |  varchar  |  no | yes |
-| interests | varchar | no | yes |
-| blocked| varchar | no | yes|
 
+| Name                |  Type   | Unique | Optional |
+| :------------------ | :-----: | -----: | -------: |
+| id                  | string  |     no |      yes |
+| username            | varchar |    yes |       no |
+| password            | varchar |     no |       no |
+| first_name          | varchar |     no |       no |
+| last_name           | varchar |     no |      yes |
+| date_of_birth       | varchar |     no |       no |
+| email               | varchar |    yes |       no |
+| phone_numnber       |   int   |     no |       no |
+| gender              | varchar |     no |      yes |
+| profile_picture_url | varchar |     no |      yes |
+| other_picture       | varchar |     no |      yes |
+| pronouns            | varchar |     no |      yes |
+| location            | varchar |     no |      yes |
+| looking_for         | varchar |     no |      yes |
+| about_me            | varchar |     no |      yes |
+| matches             | varchar |     no |      yes |
+| messages            | varchar |     no |      yes |
+| interests           | varchar |     no |      yes |
+| blocked             | varchar |     no |      yes |
 
 ### GHI
+
 The GHI of this application can be accessed at [https://q-link.gitlab.io/q-link/](https://q-link.gitlab.io/q-link/users)
 
 It begins with a sign up page, though the users also has the ability to access a login page if they've already created an account, but are signed out.
@@ -138,25 +140,34 @@ Upon account creation or sign-in, the user is redirected to a list of potential 
 In the navbar on top, there are options to view your own profile, edit your profile, or message other users.
 
 The view profile page includes the user's:
- - first and last name
- - Gender
- - Pronouns
- - Location
- - About Me
- - Profile Picture
- - Another picture
+
+- first and last name
+- Gender
+- Pronouns
+- Location
+- About Me
+- Profile Picture
+- Another picture
 
 The Edit Profile page includes the ability to edit everything on the view profile page for the signed in user, as well as:
- - Date of Birth
- - Email Address
- - Phone Number
- - Looking For
- - Interests
+
+- Date of Birth
+- Email Address
+- Phone Number
+- Looking For
+- Interests
+
+On the Chat page you can access all users and talk to them globally.
+
+- Access by hitting the + button and search for a user or hit the down arrow key and names should pop up
+- Send them a message and all messaging should be in real time.
 
 ### Intended Market
+
 We are targeting the LGBTQ+ community. We notice how this market is untapped and wanted to provide a safe space for them to meet eachother.
 
 ### Functionality
+
 A user can sign up, or sign in if they are already a user.
 Once logged in, they will be a taken to the list of profile pages to view potential matches.
 On that page, they have the ability to type in a search bar that could filter the list of profiles by their prefrences.
@@ -170,10 +181,8 @@ their user info, name, location, interests, about me and view some pictures. Edi
 A user is also able to view another profile by clicking on the view profile link in the list of profiles page. From there the user can view the invdivdual profile
 and match or decline the user from the list of profile pages.
 
-
-
-
 ### Project Initialization for Local Version:
+
 To initialize our application on your own local machine, please follow the steps below.
 
 1. Clone this repository to your local machine
