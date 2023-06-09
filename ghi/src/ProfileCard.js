@@ -36,6 +36,7 @@ function ProfileCard({ user, refreshUserInfo }) {
         method: "get",
       }
     );
+    console.log("response", response)
     if (response.ok) {
       const data = await response.json();
       setUsers(data);

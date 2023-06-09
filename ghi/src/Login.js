@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.scss";
 import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
@@ -10,10 +10,10 @@ const Login = () => {
   const location = useLocation();
   const { token, login } = useToken();
 
-  useEffect(() => {
+  // useEffect(() => {
 
 
-  }, [token, navigate]);
+  // }, [token, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -24,10 +24,10 @@ const Login = () => {
 
   const isSignIn = location.pathname.includes("signin");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSignIn) {
-      login(formData.username, formData.password);
+      await login(formData.username, formData.password);
       console.log("first", token)
       navigate("/users");
       console.log(formData);
