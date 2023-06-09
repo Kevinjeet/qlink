@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
-function ProfileView({ user }) {
+function ProfileView(props) {
   const [profile, setProfile] = useState();
   const { token } = useAuthContext();
 
-  // const getProfile = async () => {
-  //   const response = await fetch(
-  //     `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`,
-  //     {
-  //       credentials: 'include',
-  //       headers: { Authorization: `Bearer ${token}` },
-  //       method: 'get',
-  //     }
-  //   );
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     setProfile(data);
-  //   }
-  // };
 
   useEffect(() => {
     const getProfile = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`,
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
         {
           credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
@@ -35,10 +21,10 @@ function ProfileView({ user }) {
         setProfile(data);
       }
     };
-    if (user) {
+    if (props.user) {
       getProfile();
     }
-  }, [token, user]);
+  }, [token, props.user]);
 
   return (
     <div className="bg-orange-300">
@@ -87,6 +73,22 @@ function ProfileView({ user }) {
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700">
               {profile ? profile.about_me : "-"}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              Looking For
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700">
+              {profile ? profile.looking_for : "-"}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              Interests
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700">
+              {profile ? profile.interests : "-"}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">

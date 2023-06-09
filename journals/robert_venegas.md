@@ -1,3 +1,8 @@
+#### 6.9
+```
+FInished Frontend deploy!! got everything to work. Now im working on the readme with dylan and i remade the excalidraws we made before.
+```
+
 #### 6.8
 ```
 Finished backend deploy now we can focus on frontend and we will be done with this project!
