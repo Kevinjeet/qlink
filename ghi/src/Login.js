@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.scss";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./style.scss";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const { token, login } = useToken();
 
-  // useEffect(() => {
 
-  // }, [token, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -21,24 +19,31 @@ const Login = () => {
     });
   };
 
-  const isSignIn = location.pathname.includes("signin");
+  // const isSignIn = location.pathname.includes("signin");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSignIn) {
-      await login(formData.username, formData.password);
-      console.log("first", token);
-      navigate("/users");
-      console.log(formData);
-    }
-  };
 
-  const { username = "", password = "" } = formData;
-  return token ? null : (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">QLink</span>
-        <span className="title">Login</span>
+    await login(formData.username, formData.password);
+    console.log("first", token)
+    // e.target.reset()
+    console.log(formData);
+
+
+    }
+  useEffect(() => {
+    if (token) {
+      navigate("/users");
+    }
+
+  }, [token, navigate]);
+
+  const { username = "" , password = "" } = formData;
+  return (
+        <div className="formContainer">
+            <div className="formWrapper">
+                <span className="logo">QLink</span>
+                <span className="title">Login</span>
 
         <form>
           <input

@@ -1,5 +1,5 @@
 June 8, 2023
-compoleted front end deployment
+compoleted front end deployment, spent the rest of the day working on fixing bug that token isn't bring grabbed after logging in/signing up. Also worked with the siers and still couldn't come up with how to fix it. I worked on fixing the path names to be able to add some funcationality that makes the user navigate to the sign in page.
 
 June 7, 2023
 Completed the back end deployment as a group

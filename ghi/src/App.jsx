@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
@@ -18,6 +18,9 @@ function App(props) {
   const { user } = useUser(token);
   const [userInfo, setUserInfo] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
+
+
 
   const refreshUserInfo = async () => {
     if (user && user.username) {
@@ -27,22 +30,35 @@ function App(props) {
       setUserInfo(response);
     }
   };
+    const click = event => {
+        logout();
+    const timer = setTimeout(() => {
+        console.log("here")
+        navigate('/signin')
+        }, 500)
+      return () => clearTimeout(timer);}
 
   useEffect(() => {
     console.log("app", token);
     if (token) {
       refreshUserInfo();
-      console.log("user info refresh");
-    }
-    const timer = setTimeout(() => {
-      console.log("timer");
-      if (!token) {
-        console.log("no token?");
-        navigate("/signin");
+      console.log("user info refresh")
+    } else if (location.pathname.includes("user")) {
+      const timer = setTimeout(() => {
+       if (!token) {
+        navigate('/signin')
       }
-    }, 4000);
-
-    return () => clearTimeout(timer);
+      }, 5000)
+      return () => clearTimeout(timer);
+    }
+    // const timer =setTimeout(() => {
+    // console.log("timer")
+    // if (!token) {
+    //   console.log("no token?")
+    //   navigate('/signin')
+    // }
+    // }, 4000);
+    // return () => clearTimeout(timer);
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -51,21 +67,21 @@ function App(props) {
         {token ? (
           <>
             <div className="navigation">
-              <button className="logout-button" onClick={logout}>
-                <NavLink to="/signin">Logout</NavLink>
+              <button className="logout-button" onClick={ click }>
+                Logout
               </button>
               <nav className="nav-links">
                 <NavLink className="nav-link" to="/users">
                   List of Profiles
                 </NavLink>
-                <NavLink className="nav-link" to="/chat">
+                <NavLink className="nav-link" to="/users/chat">
                   My Messages
                 </NavLink>
 
                 <NavLink className="nav-link" to="/users/my_profile">
                   My profile
                 </NavLink>
-                <NavLink className="nav-link" to="/edit">
+                <NavLink className="nav-link" to="/users/my_profile/edit">
                   Edit Profile
                 </NavLink>
               </nav>
