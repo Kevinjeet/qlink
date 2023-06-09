@@ -1,3 +1,6 @@
+June 9, 2023
+Found out the bug we were having was a deployment error. Made that fix and uncommented the test in the ci.yml file and made sure it worked.
+
 June 8, 2023
 compoleted front end deployment, spent the rest of the day working on fixing bug that token isn't bring grabbed after logging in/signing up. Also worked with the siers and still couldn't come up with how to fix it. I worked on fixing the path names to be able to add some funcationality that makes the user navigate to the sign in page.
 
