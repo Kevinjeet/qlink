@@ -20,8 +20,6 @@ function App(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
-
-
   const refreshUserInfo = async () => {
     if (user && user.username) {
       const response = await fetchWithToken(
@@ -30,25 +28,26 @@ function App(props) {
       setUserInfo(response);
     }
   };
-    const click = event => {
-        logout();
+  const click = () => {
+    logout();
     const timer = setTimeout(() => {
-        console.log("here")
-        navigate('/signin')
-        }, 500)
-      return () => clearTimeout(timer);}
+      console.log("here");
+      navigate("/signin");
+    }, 500);
+    return () => clearTimeout(timer);
+  };
 
   useEffect(() => {
     console.log("app", token);
     if (token) {
       refreshUserInfo();
-      console.log("user info refresh")
+      console.log("user info refresh");
     } else if (location.pathname.includes("user")) {
       const timer = setTimeout(() => {
-       if (!token) {
-        navigate('/signin')
-      }
-      }, 5000)
+        if (!token) {
+          navigate("/signin");
+        }
+      }, 5000);
       return () => clearTimeout(timer);
     }
     // const timer =setTimeout(() => {
@@ -67,7 +66,7 @@ function App(props) {
         {token ? (
           <>
             <div className="navigation">
-              <button className="logout-button" onClick={ click }>
+              <button className="logout-button" onClick={click}>
                 Logout
               </button>
               <nav className="nav-links">
@@ -104,21 +103,24 @@ function App(props) {
       </div>
 
       <Routes>
-        <Route path="/" element={<SignUp user={user} />} />
+        <Route path="/" element={<SignUp />} />
 
         <Route path="/signin" element={<Login />} />
-        <Route path="users/chat" element={<ChatsPage user={user} />} />
+        <Route path="users/chat" element={<ChatsPage user={userInfo} />} />
         <Route
           path="/users"
           element={
             <ProfileCard refreshUserInfo={refreshUserInfo} user={userInfo} />
           }
         />
-        <Route path="users/:username" element={<ProfileView user={user} />} />
+        <Route
+          path="users/:username"
+          element={<ProfileView user={userInfo} />}
+        />
         <Route path="users/:username/view_profile" element={<OtherProfile />} />
         <Route
           path="/users/my_profile/edit"
-          element={<ProfileForm user={user} token={token} />}
+          element={<ProfileForm user={userInfo} token={token} />}
         />
       </Routes>
     </>

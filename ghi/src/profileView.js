@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 
-function ProfileView(props) {
+function ProfileView({ user }) {
   const [profile, setProfile] = useState();
   const { token } = useAuthContext();
 
   // const getProfile = async () => {
   //   const response = await fetch(
-  //     `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
+  //     `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`,
   //     {
   //       credentials: 'include',
   //       headers: { Authorization: `Bearer ${token}` },
@@ -23,7 +23,7 @@ function ProfileView(props) {
   useEffect(() => {
     const getProfile = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`,
         {
           credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
@@ -35,10 +35,10 @@ function ProfileView(props) {
         setProfile(data);
       }
     };
-    if (props.user) {
+    if (user) {
       getProfile();
     }
-  }, [token, props.user]);
+  }, [token, user]);
 
   return (
     <div className="bg-orange-300">

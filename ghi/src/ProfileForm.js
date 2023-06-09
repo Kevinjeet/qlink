@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
-function ProfileForm(props) {
+function ProfileForm({ user }) {
   const [password, setPassword] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -53,7 +53,7 @@ function ProfileForm(props) {
     profile.about_me = about_me;
     profile.interests = interests;
 
-    const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`;
+    const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`;
     const fetchConfig = {
       method: "put",
       body: JSON.stringify(profile),
@@ -83,10 +83,10 @@ function ProfileForm(props) {
     }
   };
   useEffect(() => {
-    if (props.user.username) {
+    if (user.username) {
       const fetchData = async () => {
         const response = await fetch(
-          `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${props.user.username}`,
+          `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${user.username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ function ProfileForm(props) {
       };
       fetchData();
     }
-  }, [token, props.user]);
+  }, [token, user]);
 
   return (
     <>
