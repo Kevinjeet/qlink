@@ -30,6 +30,7 @@ function App(props) {
   };
 
   useEffect(() => {
+    console.log("app", token)
     if (token) {
       refreshUserInfo();
     }

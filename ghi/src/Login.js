@@ -12,9 +12,7 @@ const Login = () => {
 
   useEffect(() => {
 
-    if (token) {
-      navigate("/users");
-    }
+
   }, [token, navigate]);
 
   const handleFormChange = (e) => {
@@ -30,6 +28,11 @@ const Login = () => {
     e.preventDefault();
     if (isSignIn) {
       login(formData.username, formData.password);
+      console.log("first", token)
+      if (token) {
+        console.log("second", token)
+        navigate("/users");
+    }
     }
     console.log(formData);
     }
