@@ -121,7 +121,7 @@ function ProfileForm({ user }) {
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a Profile</h1>
+            <h1>Edit a Profile</h1>
             <form onSubmit={handleSubmit} id="create-profile-form">
               <div className="form-floating mb-3">
                 <input
@@ -291,7 +291,7 @@ function ProfileForm({ user }) {
                 />
                 <label htmlFor="email">Interests</label>
               </div>
-              <button className="btn btn-primary">Create</button>
+              <button className="btn btn-primary">Edit!</button>
             </form>
           </div>
         </div>
