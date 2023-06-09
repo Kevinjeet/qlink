@@ -107,7 +107,7 @@ function App(props) {
         <Route path="/" element={<SignUp user={user} />} />
 
         <Route path="/signin" element={<Login />} />
-        <Route path="/chat" element={<ChatsPage user={user} />} />
+        <Route path="users/chat" element={<ChatsPage user={user} />} />
         <Route
           path="/users"
           element={
@@ -117,7 +117,7 @@ function App(props) {
         <Route path="users/:username" element={<ProfileView user={user} />} />
         <Route path="users/:username/view_profile" element={<OtherProfile />} />
         <Route
-          path="/edit"
+          path="/users/my_profile/edit"
           element={<ProfileForm user={user} token={token} />}
         />
       </Routes>
