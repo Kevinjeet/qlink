@@ -30,11 +30,12 @@ function App(props) {
   };
 
   useEffect(() => {
-    const timer =setTimeout(() => {
-    console.log("second")
     if (token) {
       refreshUserInfo();
-    } else {
+    }
+    const timer =setTimeout(() => {
+    console.log("second")
+    if (!token) {
       navigate('/signin')
     }
     }, 4000);
