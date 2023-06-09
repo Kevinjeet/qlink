@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileCard from "./ProfileCard.js";
@@ -13,14 +13,12 @@ import ChatsPage from "./ChatsPage";
 import OtherProfile from "./otherProfile";
 import { NavLink } from "react-router-dom";
 
+
 function App(props) {
   const { token, logout, fetchWithToken } = useToken();
   const { user } = useUser(token);
   const [userInfo, setUserInfo] = useState();
   const navigate = useNavigate();
-  const location = useLocation();
-
-
 
   const refreshUserInfo = async () => {
     if (user && user.username) {
@@ -30,35 +28,23 @@ function App(props) {
       setUserInfo(response);
     }
   };
-    const click = event => {
-        logout();
-    const timer = setTimeout(() => {
-        console.log("here")
-        navigate('/signin')
-        }, 500)
-      return () => clearTimeout(timer);}
 
   useEffect(() => {
-    console.log("app", token);
+    console.log("app", token)
     if (token) {
       refreshUserInfo();
       console.log("user info refresh")
-    } else if (location.pathname.includes("user")) {
-      const timer = setTimeout(() => {
-       if (!token) {
-        navigate('/signin')
-      }
-      }, 5000)
-      return () => clearTimeout(timer);
     }
-    // const timer =setTimeout(() => {
-    // console.log("timer")
-    // if (!token) {
-    //   console.log("no token?")
-    //   navigate('/signin')
-    // }
-    // }, 4000);
-    // return () => clearTimeout(timer);
+    const timer =setTimeout(() => {
+    console.log("timer")
+    if (!token) {
+      console.log("no token?")
+      navigate('/signin')
+    }
+    }, 4000);
+
+    return () => clearTimeout(timer);
+
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -67,37 +53,33 @@ function App(props) {
         {token ? (
           <>
             <div className="navigation">
-              <button className="logout-button" onClick={ click }>
-                Logout
+              <button className="logout-button" onClick={logout}>
+                <NavLink to="/signin">Logout</NavLink>
               </button>
               <nav className="nav-links">
                 <NavLink className="nav-link" to="/users">
                   List of Profiles
                 </NavLink>
-                <NavLink className="nav-link" to="/users/chat">
+                <NavLink className="nav-link" to="/chat">
                   My Messages
                 </NavLink>
 
                 <NavLink className="nav-link" to="/users/my_profile">
                   My profile
                 </NavLink>
-                <NavLink className="nav-link" to="/users/my_profile/edit">
+                <NavLink className="nav-link" to="users/edit_profile">
                   Edit Profile
                 </NavLink>
               </nav>
             </div>
           </>
         ) : (
-          <>
+            <>
             <div className="navigation">
-              <nav className="nav-links">
-                <NavLink className="nav-link" to="/signin">
-                  Login
-                </NavLink>
-                <NavLink className="nav-link" to="/">
-                  Sign Up Here!
-                </NavLink>
-              </nav>
+            <nav className="nav-links">
+              <NavLink className="nav-link" to ="/signin">Login</NavLink>
+              <NavLink className="nav-link" to ="/">Sign Up Here!</NavLink>
+            </nav>
             </div>
           </>
         )}
@@ -105,7 +87,6 @@ function App(props) {
 
       <Routes>
         <Route path="/" element={<SignUp user={user} />} />
-
         <Route path="/signin" element={<Login />} />
         <Route path="/chat" element={<ChatsPage user={user} />} />
         <Route
@@ -115,9 +96,9 @@ function App(props) {
           }
         />
         <Route path="users/:username" element={<ProfileView user={user} />} />
-        <Route path="users/:username/view_profile" element={<OtherProfile />} />
+        <Route path="users/:username/view_profile" element={<OtherProfile/>}/>
         <Route
-          path="/edit"
+          path="users/edit_profile"
           element={<ProfileForm user={user} token={token} />}
         />
       </Routes>
