@@ -33,10 +33,12 @@ function App(props) {
     console.log("app", token)
     if (token) {
       refreshUserInfo();
+      console.log("user info refresh")
     }
     const timer =setTimeout(() => {
-    console.log("second")
+    console.log("timer")
     if (!token) {
+      console.log("no token?")
       navigate('/signin')
     }
     }, 4000);

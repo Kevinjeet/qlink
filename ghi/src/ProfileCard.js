@@ -45,10 +45,15 @@ function ProfileCard({ user, refreshUserInfo }) {
       console.error(errorData);
     }
   };
+
+    const timer =setTimeout(() => {
     if (token) {
-      fetchData();
+      fetchData()
+      console.log("card timer")
     }
-  }, [token, user]);
+    }, 4000);
+      return () => clearTimeout(timer);
+    }, [token, user]);
 
   const matchButton = async (username) => {
     const response = await fetch(

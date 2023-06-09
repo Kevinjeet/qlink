@@ -29,12 +29,10 @@ const Login = () => {
     if (isSignIn) {
       login(formData.username, formData.password);
       console.log("first", token)
-      if (token) {
-        console.log("second", token)
-        navigate("/users");
+      navigate("/users");
+      console.log(formData);
     }
-    }
-    console.log(formData);
+
     }
 
 
