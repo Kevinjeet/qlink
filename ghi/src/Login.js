@@ -1,49 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import "./style.scss";
 
 const Login = () => {
-  const [formData, setFormData] = useState({});
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   const { token, login } = useToken();
 
-
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // const isSignIn = location.pathname.includes("signin");
+  const isSignIn = location.pathname.includes("signin");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await login(formData.username, formData.password);
-    console.log("first", token)
-    // e.target.reset()
-    console.log(formData);
-
-
-    }
-  useEffect(() => {
-    if (token) {
+    if (isSignIn) {
+      await login(username, password);
+      console.log("first", token);
       navigate("/users");
+      console.log({ username, password });
     }
+  };
 
-  }, [token, navigate]);
-
-  const { username = "" , password = "" } = formData;
-  return (
-        <div className="formContainer">
-            <div className="formWrapper">
-                <span className="logo">QLink</span>
-                <span className="title">Login</span>
+  return token ? null : (
+    <div className="formContainer">
+      <div className="formWrapper">
+        <span className="logo">QLink</span>
+        <span className="title">Login</span>
 
         <form>
           <input
@@ -51,20 +34,20 @@ const Login = () => {
             name="username"
             value={username}
             placeholder="username"
-            onChange={handleFormChange}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
             name="password"
             value={password}
             placeholder="password"
-            onChange={handleFormChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <button onClick={handleSubmit}>Login</button>
         </form>
         <p>
-          You don't have an account?<a href="/">Register</a>
+          You don't have an account? <a href="/">Register</a>
         </p>
       </div>
     </div>
