@@ -12,7 +12,6 @@ const Login = () => {
 
   // useEffect(() => {
 
-
   // }, [token, navigate]);
 
   const handleFormChange = (e) => {
@@ -28,45 +27,43 @@ const Login = () => {
     e.preventDefault();
     if (isSignIn) {
       await login(formData.username, formData.password);
-      console.log("first", token)
+      console.log("first", token);
       navigate("/users");
       console.log(formData);
     }
+  };
 
-    }
-
-
-  const { username = "" , password = "" } = formData;
+  const { username = "", password = "" } = formData;
   return token ? null : (
-        <div className="formContainer">
-            <div className="formWrapper">
-                <span className="logo">QLink</span>
-                <span className="title">Login</span>
+    <div className="formContainer">
+      <div className="formWrapper">
+        <span className="logo">QLink</span>
+        <span className="title">Login</span>
 
-                <form>
-                    <input
-                    type="text"
-                    name="username"
-                    value={username}
-                    placeholder="username"
-                    onChange={handleFormChange}
-                    />
-                    <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    placeholder="password"
-                    onChange={handleFormChange}
-                    />
+        <form>
+          <input
+            type="text"
+            name="username"
+            value={username}
+            placeholder="username"
+            onChange={handleFormChange}
+          />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            placeholder="password"
+            onChange={handleFormChange}
+          />
 
-                    <button onClick={handleSubmit}>Login</button>
-
-
-                </form>
-                <p>You don't have an account?<a href="/">Register</a></p>
-            </div>
-        </div>
-    );
+          <button onClick={handleSubmit}>Login</button>
+        </form>
+        <p>
+          You don't have an account?<a href="/">Register</a>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

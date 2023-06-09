@@ -28,33 +28,33 @@ function ProfileCard({ user, refreshUserInfo }) {
   // };
 
   useEffect(() => {
-      const fetchData = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        method: "get",
+    const fetchData = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          method: "get",
+        }
+      );
+      console.log("response", response);
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      } else {
+        console.error(response);
+        const errorData = await response.json();
+        console.error(errorData);
       }
-    );
-    console.log("response", response)
-    if (response.ok) {
-      const data = await response.json();
-      setUsers(data);
-    } else {
-      console.error(response);
-      const errorData = await response.json();
-      console.error(errorData);
-    }
-  };
+    };
 
-    const timer =setTimeout(() => {
-    if (token) {
-      fetchData()
-      console.log("card timer")
-    }
+    const timer = setTimeout(() => {
+      if (token) {
+        fetchData();
+        console.log("card timer");
+      }
     }, 4000);
-      return () => clearTimeout(timer);
-    }, [token, user]);
+    return () => clearTimeout(timer);
+  }, [token, user]);
 
   const matchButton = async (username) => {
     const response = await fetch(

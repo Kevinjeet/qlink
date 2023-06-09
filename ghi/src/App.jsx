@@ -13,7 +13,6 @@ import ChatsPage from "./ChatsPage";
 import OtherProfile from "./otherProfile";
 import { NavLink } from "react-router-dom";
 
-
 function App(props) {
   const { token, logout, fetchWithToken } = useToken();
   const { user } = useUser(token);
@@ -30,21 +29,20 @@ function App(props) {
   };
 
   useEffect(() => {
-    console.log("app", token)
+    console.log("app", token);
     if (token) {
       refreshUserInfo();
-      console.log("user info refresh")
+      console.log("user info refresh");
     }
-    const timer =setTimeout(() => {
-    console.log("timer")
-    if (!token) {
-      console.log("no token?")
-      navigate('/signin')
-    }
+    const timer = setTimeout(() => {
+      console.log("timer");
+      if (!token) {
+        console.log("no token?");
+        navigate("/signin");
+      }
     }, 4000);
 
     return () => clearTimeout(timer);
-
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -74,12 +72,16 @@ function App(props) {
             </div>
           </>
         ) : (
-            <>
+          <>
             <div className="navigation">
-            <nav className="nav-links">
-              <NavLink className="nav-link" to ="/signin">Login</NavLink>
-              <NavLink className="nav-link" to ="/">Sign Up Here!</NavLink>
-            </nav>
+              <nav className="nav-links">
+                <NavLink className="nav-link" to="/signin">
+                  Login
+                </NavLink>
+                <NavLink className="nav-link" to="/">
+                  Sign Up Here!
+                </NavLink>
+              </nav>
             </div>
           </>
         )}
@@ -97,7 +99,7 @@ function App(props) {
           }
         />
         <Route path="users/:username" element={<ProfileView user={user} />} />
-        <Route path="users/:username/view_profile" element={<OtherProfile/>}/>
+        <Route path="users/:username/view_profile" element={<OtherProfile />} />
         <Route
           path="/edit"
           element={<ProfileForm user={user} token={token} />}
