@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 const Login = () => {
@@ -49,7 +49,7 @@ const Login = () => {
           <button disabled={isDisabled}>Login</button>
         </form>
         <p>
-          You don't have an account? <a href="/">Register</a>
+          You don't have an account? <NavLink to="/">Register</NavLink>
         </p>
       </div>
     </div>

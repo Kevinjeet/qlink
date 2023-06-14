@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 const SignUp = () => {
@@ -113,7 +113,7 @@ const SignUp = () => {
           <button onClick={handleSubmit}>Sign Up</button>
         </form>
         <p>
-          Do you have an account already? <a href="/signin">Login</a>
+          Do you have an account already? <NavLink to="/signin">Login</NavLink>
         </p>
       </div>
     </div>

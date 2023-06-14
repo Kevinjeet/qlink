@@ -8,6 +8,7 @@ function ProfileCard({ user, refreshUserInfo }) {
   const { token } = useAuthContext();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const [checkedbox, setCheckedbox] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +35,7 @@ function ProfileCard({ user, refreshUserInfo }) {
         fetchData();
         console.log("card timer");
       }
-    }, 2000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [token, user]);
 
@@ -86,11 +87,20 @@ function ProfileCard({ user, refreshUserInfo }) {
       console.error("errorData:", errorData);
     }
   };
-
+  const handleCheckbox = (event) => {
+    const checkValue = event.target.value;
+    if (event.target.checked) {
+      setCheckedbox((prevTags) => [...prevTags, checkValue]);
+    } else {
+      setCheckedbox((prevTags) =>
+      prevTags.filter((tag) => tag !== checkValue))
+    }
+  }
   const handleSearch = (event) => {
     setSearch(event.target.value.toLowerCase());
   };
   const filterBio = users.filter((u) => {
+    const gender = u.gender || "";
     const aboutMe = u.about_me || "";
     const lookingFor = u.looking_for || "";
     const interests = u.interests || "";
@@ -100,32 +110,155 @@ function ProfileCard({ user, refreshUserInfo }) {
     ) {
       return false;
     }
+    const tagMatch = checkedbox.length=== 0 ||
+    checkedbox.some((tag) =>
+    [gender, aboutMe, lookingFor, interests].some((text) =>
+    text.toLowerCase().includes(tag)))
     return (
-      (aboutMe.toLowerCase().includes(search) ||
+      (gender.toLowerCase().includes(search) ||
+      aboutMe.toLowerCase().includes(search) ||
         lookingFor.toLowerCase().includes(search) ||
         interests.toLowerCase().includes(search)) &&
-      user?.username !== u.username
+      user?.username !== u.username &&
+      tagMatch
     );
   });
 
   return (
     <>
-      <section className="small-white dark:bg-gray-900">
-        <div className="container px-3 py-5 mx-auto">
-          <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
+          <h1 className="text-center text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
             List of Potential Matches
           </h1>
+          <div className="container px-10 py-5 mx-auto">
           <h2>
             <form className="searchBar">
               <input
                 type="text"
-                className="searchBarinput"
-                placeholder="search preferences"
+                className="searchBarinput bg-orange-200 border border-gray-500"
+                placeholder="search preferences here"
                 value={search}
                 onChange={handleSearch}
               />
             </form>
-          </h2>
+          </h2></div>
+          <div className="flex">
+            <div className="w-1/4 px-4">
+
+
+
+          <div className="container py-5 mx-auto border border-gray-500 overflow-hidden">
+          <h1 className=" text-center mb-4 font-bold text-gray-900 dark:text-white">Check tags</h1>
+          <h2 className="text-center mb-2 text-gray-900 dark:text-white">Gender</h2>
+<ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white inline-flex flex-wrap">
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="male"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">male</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="female"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">female</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="Non-binary"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">Non-binary</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="Gender nonconforming"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">Gender nonconforming</div></label>
+        </div>
+    </li>
+</ul>
+<h2 className="text-center mb-2 text-gray-900 dark:text-white">Interests</h2>
+<ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white inline-flex flex-wrap">
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="sports"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">sports</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="gaming"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">gaming</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="traveling"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">traveling</div></label>
+        </div>
+    </li>
+    <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
+        <div className="flex items-center pl-3">
+            <input id="vue-checkbox"
+            type="checkbox"
+            value="art"
+            className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
+            dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            onChange={handleCheckbox}/>
+            <label for="vue-checkbox"
+            className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              <div className="bg-gray-200 px-2 py-1 rounded-lg">art</div></label>
+        </div>
+    </li>
+</ul></div></div><div className="w-3/4">
+<div className="container px-2 py-1 mx-auto">
           <div className="grid grid-cols-2 gap-1 mt-1 md:mt-1 md:grid-cols-3">
             {filterBio?.map((u) => {
               return (
@@ -134,7 +267,7 @@ function ProfileCard({ user, refreshUserInfo }) {
                   key={u?.username}
                   value={u?.username}
                 >
-                  <div className="max-w-sm mx-auto my-10 bg white rounded-sm shadow-md p-5">
+                  <div className="w-full max-w-xs mx-auto my-10 bg-white rounded-sm shadow-md p-5">
                     {u.profile_picture_url !== "" &&
                     u.profile_picture_url !== "string" ? (
                       <img
@@ -192,7 +325,7 @@ function ProfileCard({ user, refreshUserInfo }) {
             })}
           </div>
         </div>
-      </section>
+        </div></div>
     </>
   );
 }
