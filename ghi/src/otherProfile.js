@@ -1,7 +1,7 @@
 // style was added
-import React, { useEffect, useState } from 'react';
-import { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useParams } from "react-router-dom";
 
 function OtherProfile() {
   const [profile, setProfile] = useState(null);
@@ -14,7 +14,7 @@ function OtherProfile() {
         const response = await fetch(
           `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${username}`,
           {
-            credentials: 'include',
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -23,10 +23,10 @@ function OtherProfile() {
           setProfile(data);
         } else {
           // Handle error response
-          console.error('Failed to fetch profile:', response.status);
+          console.error("Failed to fetch profile:", response.status);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -54,14 +54,16 @@ function OtherProfile() {
             </thead>
             <tbody>
               <tr>
-                <td>{profile.first_name} {profile.last_name}</td>
+                <td>
+                  {profile.first_name} {profile.last_name}
+                </td>
                 <td>{profile.gender}</td>
                 <td>{profile.pronouns}</td>
                 <td>{profile.location}</td>
                 <td>{profile.about_me}</td>
                 <td>{profile.looking_for}</td>
                 <td>{profile.interests}</td>
-                  <td>
+                <td>
                   <img src={profile.profile_picture_url} alt="Profile" />
                 </td>
                 <td>

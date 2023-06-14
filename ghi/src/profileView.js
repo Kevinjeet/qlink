@@ -5,7 +5,6 @@ function ProfileView(props) {
   const [profile, setProfile] = useState();
   const { token } = useAuthContext();
 
-
   useEffect(() => {
     const getProfile = async () => {
       const response = await fetch(

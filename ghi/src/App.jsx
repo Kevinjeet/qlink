@@ -12,6 +12,7 @@ import ProfileForm from "./ProfileForm";
 import ChatsPage from "./ChatsPage";
 import OtherProfile from "./otherProfile";
 import { NavLink } from "react-router-dom";
+import MatchesPage from "./MatchesPage";
 
 function App(props) {
   const { token, logout, fetchWithToken } = useToken();
@@ -48,7 +49,6 @@ function App(props) {
       }, 5000);
       return () => clearTimeout(timer);
     }
-
   }, [token, user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -64,10 +64,9 @@ function App(props) {
                 <NavLink className="nav-link" to="/users">
                   List of Profiles
                 </NavLink>
-                <NavLink className="nav-link" to="/users/chat">
+                <NavLink className="nav-link" to="/users/matches">
                   My Messages
                 </NavLink>
-
                 <NavLink className="nav-link" to="/users/my_profile">
                   My profile
                 </NavLink>
@@ -109,6 +108,8 @@ function App(props) {
           element={<ProfileView user={userInfo} />}
         />
         <Route path="users/:username/view_profile" element={<OtherProfile />} />
+        <Route path="/users/matches" element={<MatchesPage userInfo={userInfo} />} />
+
         <Route
           path="/users/my_profile/edit"
           element={<ProfileForm user={userInfo} token={token} />}

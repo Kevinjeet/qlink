@@ -9,7 +9,6 @@ function ProfileCard({ user, refreshUserInfo }) {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -56,6 +55,7 @@ function ProfileCard({ user, refreshUserInfo }) {
     if (response.ok) {
       refreshUserInfo();
       console.log("success match");
+      navigate("/users/matches"); // add this line to navigate to the matches page
     } else {
       console.error("error response:", response);
       const errorData = await response.json();

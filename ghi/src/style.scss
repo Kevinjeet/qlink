@@ -4,6 +4,55 @@
   }
 }
 
+.matches-page {
+  h1 {
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 10px;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1em;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        color: #fff;
+        background-color: #4a90e2;
+        border: none;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #72b7f2;
+        }
+
+        &:active {
+          background-color: #4a90e2;
+        }
+      }
+    }
+  }
+  h3 {
+    font-size: 1.5em;
+    color: #666;
+    text-align: center;
+    margin-top: 50px;
+  }
+}
+
 .navigation {
   display: flex;
   align-items: center;
@@ -365,7 +414,7 @@
       background: #ff4500; // orange color
       color: #ffffff; // white color
       border-radius: 15px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       text-align: center;
 
       h2 {

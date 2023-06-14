@@ -9,7 +9,7 @@ const ChatsPage = ({ user }) => {
   }, [user.username]);
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
+    <div style={{ height: "100vh", width: "100vw", fontFamily:'fangsong' }}>
       {user.username !== undefined ? (
         <PrettyChatWindow
           projectId="d01899ce-a15b-4f67-91a1-246aaf8ba2f0"
