@@ -1,7 +1,6 @@
-// style was added
-import React, { useEffect, useState } from "react";
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
+import { useParams } from 'react-router-dom';
 
 function OtherProfile() {
   const [profile, setProfile] = useState(null);
@@ -14,7 +13,7 @@ function OtherProfile() {
         const response = await fetch(
           `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${username}`,
           {
-            credentials: "include",
+            credentials: 'include',
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -23,10 +22,10 @@ function OtherProfile() {
           setProfile(data);
         } else {
           // Handle error response
-          console.error("Failed to fetch profile:", response.status);
+          console.error('Failed to fetch profile:', response.status);
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error('Error:', error);
       }
     };
 
@@ -34,44 +33,70 @@ function OtherProfile() {
   }, [token, username]);
 
   return (
-    <div className="card">
+    <div className="card flex justify-center items-center h-screen bg-orange-300">
       <div className="card-body">
-        <h1 className="card-title">Profile</h1>
+        <h1 className="card-title">View Profile</h1>
         {profile ? (
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Full Name</th>
-                <th>Gender</th>
-                <th>Pronouns</th>
-                <th>Location</th>
-                <th>About Me</th>
-                <th>Looking for</th>
-                <th>Interests</th>
-                <th>Profile Picture</th>
-                <th>Other pictures</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {profile.first_name} {profile.last_name}
-                </td>
-                <td>{profile.gender}</td>
-                <td>{profile.pronouns}</td>
-                <td>{profile.location}</td>
-                <td>{profile.about_me}</td>
-                <td>{profile.looking_for}</td>
-                <td>{profile.interests}</td>
-                <td>
-                  <img src={profile.profile_picture_url} alt="Profile" />
-                </td>
-                <td>
-                  <img src={profile.other_picture} alt="Other" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex flex-col justify-between p-4 leading-normal">
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Profile Picture:</dt>
+                  <dd className="mt-1">
+                    <img src={profile.profile_picture_url} alt="Profile" />
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Other pictures:</dt>
+                  <dd className="mt-1">
+                    <img src={profile.other_picture} alt="Other" />
+                  </dd>
+                </div>
+              <dl className="divide-y divide-gray-400">
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Name:</dt>
+                  <dd className="mt-1 text-gray-900 dark:text-white">
+                    {profile.first_name} {profile.last_name}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Gender:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.gender}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Pronouns:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.pronouns}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Location:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.location}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">About Me:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.about_me}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Looking for:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.looking_for}
+                  </dd>
+                </div>
+                <div className="data-box">
+                  <dt className="text-lg font-medium">Interests:</dt>
+                  <dd className="mt-1 text-gray-700 dark:text-gray-400">
+                    {profile.interests}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
         ) : (
           <p>Loading profile...</p>
         )}
