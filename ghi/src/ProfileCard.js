@@ -284,13 +284,13 @@ function ProfileCard({ user, refreshUserInfo }) {
                       />
                     )}
                     <h1 className="text-center text-2xl font-bold mt-3">
-                      <span className="bg-purple-100 rounded-sm shadow-md inline-block">{u?.username}</span>
+                      {u?.username}
                     </h1>
                     <h2 className="text-center text-2xl font-semibold mt-3">
-                      <span className="bg-purple-100 rounded-sm shadow-md inline-block">{u.first_name} {u.last_name}</span>
+                      {u.first_name} {u.last_name}
                     </h2>
                     <p className="text-center text-gray-600 mt-1">
-                      <span className="bg-purple-100 rounded-sm shadow-md inline-block">{u.location}</span>
+                      {u.location}
                     </p>
                     <div className="flex justify-center mt-5">
                       <button
