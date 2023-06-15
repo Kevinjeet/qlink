@@ -111,7 +111,7 @@ function ProfileCard({ user, refreshUserInfo }) {
       return false;
     }
     const tagMatch = checkedbox.length=== 0 ||
-    checkedbox.some((tag) =>
+    checkedbox.every((tag) =>
     [gender, aboutMe, lookingFor, interests].some((text) =>
     text.toLowerCase().includes(tag)))
     return (
@@ -143,49 +143,46 @@ function ProfileCard({ user, refreshUserInfo }) {
           </h2></div>
           <div className="flex">
             <div className="w-1/4 px-4">
-
-
-
           <div className="container py-5 mx-auto bg-blue-200 border border-gray-500 overflow-hidden">
           <h1 className=" text-center mb-4 font-bold text-gray-900 dark:text-white">Check tags</h1>
           <h2 className="text-center mb-2 bg-purple-100 text-gray-900 dark:text-white">Gender</h2>
 <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white inline-flex flex-wrap">
     <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
         <div className="flex items-center pl-3">
-            <input id="vue-checkbox-male"
+            <input id="male"
             type="checkbox"
             value="male"
             className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
             dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             onChange={handleCheckbox}/>
             <label
-            htmlFor="vue-checkbox-male"
+            htmlFor="male"
             className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <div className="bg-orange-200 px-2 py-1 rounded-lg">male</div></label>
         </div>
     </li>
     <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
         <div className="flex items-center pl-3">
-            <input id="vue-checkbox-female"
+            <input id="female"
             type="checkbox"
             value="female"
             className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
             dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             onChange={handleCheckbox}/>
-            <label htmlFor="vue-checkbox-female"
+            <label htmlFor="female"
             className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <div className="bg-orange-200 px-2 py-1 rounded-lg">female</div></label>
         </div>
     </li>
     <li className="rounded-t-sm dark:border-gray-600 inline-flex flex-wrap sm:block">
         <div className="flex items-center pl-3">
-            <input id="vue-checkbox-Non-binary"
+            <input id="Non-binary"
             type="checkbox"
-            value="Non-binary"
+            value="non-binary"
             className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
             dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             onChange={handleCheckbox}/>
-            <label htmlFor="vue-checkbox-Non-binary"
+            <label htmlFor="Non-binary"
             className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <div className="bg-orange-200 px-2 py-1 rounded-lg">Non-binary</div></label>
         </div>
@@ -194,7 +191,7 @@ function ProfileCard({ user, refreshUserInfo }) {
         <div className="flex items-center pl-3">
             <input id="vue-checkbox-Gender-nonconforming"
             type="checkbox"
-            value="Gender nonconforming"
+            value="gender nonconforming"
             className="h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600
             dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
             onChange={handleCheckbox}/>

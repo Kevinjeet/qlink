@@ -44,6 +44,7 @@ function App(props) {
     } else if (location.pathname.includes("user")) {
       const timer = setTimeout(() => {
         if (!token) {
+          console.log("this")
           navigate("/signin");
         }
       }, 5000);
